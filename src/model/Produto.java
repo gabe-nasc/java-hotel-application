@@ -1,3 +1,5 @@
+package model;
+
 public class Produto implements IProduto {
     String nome;
     final String codBarras;

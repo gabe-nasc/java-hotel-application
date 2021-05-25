@@ -1,3 +1,5 @@
+package model;
+
 public interface IQuarto {
     public int getNumero();
     public boolean isDisponivel();

@@ -1,3 +1,5 @@
+package model;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
@@ -31,6 +33,10 @@ public class Hospedagem {
 
     public void removeHospede(String cpf){
         listaHospedes.removeIf(obj -> Objects.equals(obj.cpf, cpf));
+    }
+
+    public ArrayList<Hospede> getListaHospedes() {
+        return listaHospedes;
     }
 
     public CatalogoQuartos reservaQuarto(int categoria, CatalogoQuartos ctg){

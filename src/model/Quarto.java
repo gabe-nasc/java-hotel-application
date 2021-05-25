@@ -1,3 +1,5 @@
+package model;
+
 public class Quarto implements IQuarto {
     int numero, categoria;
     boolean disponivel;

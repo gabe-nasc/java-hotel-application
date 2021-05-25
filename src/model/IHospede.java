@@ -1,3 +1,5 @@
+package model;
+
 public interface IHospede {
     public String getCpf();
     public String getNome();

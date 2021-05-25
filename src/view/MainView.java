@@ -9,6 +9,9 @@ import javax.swing.border.EmptyBorder;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
+
+import controller.CadastroController;
+
 import com.jgoodies.forms.layout.FormSpecs;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
@@ -16,9 +19,11 @@ import javax.swing.SwingConstants;
 
 import java.awt.Font;
 import javax.swing.JLabel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MainView extends JFrame {
-
+	CadastroController cadastro = new CadastroController();
 	/**
 	 * Launch the application.
 	 */
@@ -55,11 +60,39 @@ public class MainView extends JFrame {
 		getContentPane().add(lblNewLabel);
 		
 		JButton btnNewButton = new JButton("CADASTRAR HOSPEDE");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							SelecionarQuarto frame = new SelecionarQuarto(cadastro);
+							frame.setVisible(true);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			}
+		});
 		btnNewButton.setFont(new Font("Arial", Font.BOLD, 15));
 		btnNewButton.setBounds(10, 115, 447, 52);
 		getContentPane().add(btnNewButton);
 		
 		JButton btnNewButton_2 = new JButton("LISTAR HOSPEDES");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							ListaHospedesView frame = new ListaHospedesView(cadastro);
+							frame.setVisible(true);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			}
+		});
 		btnNewButton_2.setFont(new Font("Arial", Font.BOLD, 15));
 		btnNewButton_2.setBounds(10, 178, 447, 52);
 		getContentPane().add(btnNewButton_2);

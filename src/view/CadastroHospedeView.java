@@ -3,43 +3,43 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JSplitPane;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
+
+import controller.CadastroController;
+
 import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class CadastroHospedeView extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField nome;
+	private JTextField email;
 	private JLabel lblTelefone;
-	private JTextField textField_2;
+	private JTextField telefone;
 	private JLabel lblCpf;
-	private JTextField textField_3;
+	private JTextField cpf;
 	private JLabel lblNumero;
-	private JTextField textField_4;
+	private JTextField numero;
 	private JLabel lblBairro;
-	private JTextField textField_5;
+	private JTextField bairro;
 	private JLabel lblUf;
-	private JTextField textField_6;
+	private JTextField cidade;
 	private JButton btnNewButton;
+	private JTextField endereco;
+	
+	CadastroController cadastro;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main(CadastroController cd) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CadastroHospedeView frame = new CadastroHospedeView();
+					CadastroHospedeView frame = new CadastroHospedeView(cd);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -51,9 +51,11 @@ public class CadastroHospedeView extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CadastroHospedeView() {
+	public CadastroHospedeView(CadastroController cd) {
+		this.cadastro = cd;
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 498, 340);
+		setBounds(100, 100, 498, 425);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -64,84 +66,117 @@ public class CadastroHospedeView extends JFrame {
 		lblNewLabel.setBounds(10, 11, 60, 25);
 		contentPane.add(lblNewLabel);
 		
-		textField = new JTextField();
-		textField.setBounds(91, 13, 381, 20);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		nome = new JTextField();
+		nome.setBounds(91, 13, 381, 20);
+		contentPane.add(nome);
+		nome.setColumns(10);
 		
 		JLabel lblNewLabel_1 = new JLabel("Email");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setBounds(10, 47, 60, 25);
 		contentPane.add(lblNewLabel_1);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(91, 49, 381, 20);
-		contentPane.add(textField_1);
+		email = new JTextField();
+		email.setColumns(10);
+		email.setBounds(91, 49, 381, 20);
+		contentPane.add(email);
 		
 		lblTelefone = new JLabel("Telefone");
 		lblTelefone.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTelefone.setBounds(10, 83, 60, 25);
 		contentPane.add(lblTelefone);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(91, 85, 381, 20);
-		contentPane.add(textField_2);
+		telefone = new JTextField();
+		telefone.setColumns(10);
+		telefone.setBounds(91, 85, 381, 20);
+		contentPane.add(telefone);
 		
-		lblCpf = new JLabel("Endere\u00E7o");
+		lblCpf = new JLabel("CPF");
 		lblCpf.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCpf.setBounds(10, 119, 60, 25);
 		contentPane.add(lblCpf);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(91, 121, 381, 20);
-		contentPane.add(textField_3);
+		cpf = new JTextField();
+		cpf.setColumns(10);
+		cpf.setBounds(91, 121, 381, 20);
+		contentPane.add(cpf);
 		
 		lblNumero = new JLabel("Numero");
 		lblNumero.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNumero.setBounds(10, 155, 60, 25);
+		lblNumero.setBounds(10, 191, 60, 25);
 		contentPane.add(lblNumero);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(91, 157, 72, 20);
-		contentPane.add(textField_4);
+		numero = new JTextField();
+		numero.setColumns(10);
+		numero.setBounds(91, 193, 72, 20);
+		contentPane.add(numero);
 		
 		lblBairro = new JLabel("Bairro");
 		lblBairro.setHorizontalAlignment(SwingConstants.CENTER);
-		lblBairro.setBounds(185, 155, 60, 25);
+		lblBairro.setBounds(185, 191, 60, 25);
 		contentPane.add(lblBairro);
 		
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		textField_5.setBounds(255, 157, 217, 20);
-		contentPane.add(textField_5);
+		bairro = new JTextField();
+		bairro.setColumns(10);
+		bairro.setBounds(255, 193, 217, 20);
+		contentPane.add(bairro);
 		
 		lblUf = new JLabel("U.F.");
 		lblUf.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUf.setBounds(10, 191, 60, 25);
+		lblUf.setBounds(10, 227, 60, 25);
 		contentPane.add(lblUf);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RN", "RO", "RR", "RS", "SC", "SE", "SP", "TO"}));
-		comboBox.setBounds(91, 188, 72, 22);
-		contentPane.add(comboBox);
+		JComboBox uf = new JComboBox();
+		uf.setModel(new DefaultComboBoxModel(new String[] {"AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RN", "RO", "RR", "RS", "SC", "SE", "SP", "TO"}));
+		uf.setBounds(91, 224, 72, 22);
+		contentPane.add(uf);
 		
 		JLabel lblCidade = new JLabel("Cidade");
 		lblCidade.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCidade.setBounds(185, 191, 60, 25);
+		lblCidade.setBounds(185, 227, 60, 25);
 		contentPane.add(lblCidade);
 		
-		textField_6 = new JTextField();
-		textField_6.setColumns(10);
-		textField_6.setBounds(255, 188, 217, 20);
-		contentPane.add(textField_6);
+		cidade = new JTextField();
+		cidade.setColumns(10);
+		cidade.setBounds(255, 224, 217, 20);
+		contentPane.add(cidade);
 		
 		btnNewButton = new JButton("CADASTRAR");
 		btnNewButton.setFont(new Font("Arial", Font.BOLD, 15));
-		btnNewButton.setBounds(10, 227, 462, 61);
+		btnNewButton.setBounds(10, 263, 462, 61);
 		contentPane.add(btnNewButton);
+		
+		JLabel lblEndereco = new JLabel("Endere\u00E7o");
+		lblEndereco.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEndereco.setBounds(10, 155, 60, 25);
+		contentPane.add(lblEndereco);
+		
+		endereco = new JTextField();
+		endereco.setColumns(10);
+		endereco.setBounds(91, 157, 381, 20);
+		contentPane.add(endereco);
+		
+		
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cadastro.novosHospedes -= 1;
+				cadastro.createHospede(nome.getText(), email.getText(), cpf.getText(), telefone.getText(), endereco.getText(), bairro.getText(), cidade.getText(), (String) uf.getSelectedItem());
+
+				JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
+				if(cadastro.novosHospedes == 0){
+					cadastro.createHospedagem();
+					dispose();
+				}
+
+				nome.setText("");
+				email.setText("");
+				cpf.setText("");
+				telefone.setText("");
+				endereco.setText("");
+				bairro.setText("");
+				cidade.setText("");
+				uf.setSelectedIndex(0);
+			}
+		});
 	}
 }

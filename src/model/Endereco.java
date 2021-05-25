@@ -1,3 +1,5 @@
+package model;
+
 public class Endereco {
     String bairro;
     String cidade;

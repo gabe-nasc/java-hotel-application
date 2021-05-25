@@ -1,3 +1,5 @@
+package model;
+
 public class Hospede implements IHospede{
     String cpf, nome, telefone, email;
     Endereco endereco;
