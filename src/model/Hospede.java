@@ -1,6 +1,8 @@
 package model;
 
-public class Hospede implements IHospede{
+import java.io.Serializable;
+
+public class Hospede implements IHospede, Serializable {
     String cpf, nome, telefone, email;
     Endereco endereco;
 

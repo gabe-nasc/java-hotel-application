@@ -1,13 +1,13 @@
 package model;
 
-public class Produto implements IProduto {
+import java.io.Serializable;
+
+public class Produto implements IProduto, Serializable {
     String nome;
-    final String codBarras;
     double preco;
 
-    public Produto(String nome, String codBarras, double preco) {
+    public Produto(String nome, double preco) {
         this.nome = nome;
-        this.codBarras = codBarras;
         this.preco = preco;
     }
 
@@ -21,11 +21,6 @@ public class Produto implements IProduto {
     }
 
     @Override
-    public String getCodBarras() {
-        return codBarras;
-    }
-
-    @Override
     public double getPreco() {
         return preco;
     }
@@ -36,8 +31,7 @@ public class Produto implements IProduto {
 
     public String listarProduto(){
         StringBuilder Builder = new StringBuilder();
-        Builder.append("CodBarras: ").append(this.getCodBarras()).append("\t")
-                .append("Nome: ").append(this.getNome()).append('\t')
+        Builder.append("Nome: ").append(this.getNome()).append('\t')
                 .append("Valor: ").append(this.getPreco()).append("\n");
 
         return Builder.toString();

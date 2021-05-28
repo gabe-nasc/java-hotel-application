@@ -1,6 +1,8 @@
 package model;
 
-public class Endereco {
+import java.io.Serializable;
+
+public class Endereco implements Serializable {
     String bairro;
     String cidade;
     String logradouro;

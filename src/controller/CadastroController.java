@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import model.Endereco;
 import model.Hospedagem;
 import model.Hospede;
 
-public class CadastroController {
+public class CadastroController implements Serializable {
 	List<Hospedagem> hospedagem = new ArrayList<>();
 
 	private Hospedagem temp = new Hospedagem();
@@ -28,7 +29,7 @@ public class CadastroController {
 	
 	public List<Hospede> getHospedes() {
 		List<Hospede> tmp = new ArrayList<>();
-		for (Hospedagem h: hospedagem) {
+		for (Hospedagem h: this.hospedagem) {
 			tmp.addAll(h.getListaHospedes());
 		}
 
@@ -36,9 +37,22 @@ public class CadastroController {
 	}
 
 	public void createHospedagem(){
-		hospedagem.add(temp);
-
+		this.hospedagem.add(temp);
 		this.temp = new Hospedagem();
 	}
 
+
+    public Hospedagem getHospedagem(Hospede hospede) {
+		for (Hospedagem hp: hospedagem) {
+			if (hp.getListaHospedes().contains(hospede)){
+				return hp;
+			};
+		}
+
+		return null;
+    };
+
+	public void gerarRelatorioConta(Hospedagem hospedagem){
+		hospedagem.getRelatorioConta();
+	}
 }

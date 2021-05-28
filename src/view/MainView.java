@@ -13,6 +13,10 @@ import com.jgoodies.forms.layout.RowSpec;
 import controller.CadastroController;
 
 import com.jgoodies.forms.layout.FormSpecs;
+import controller.MainController;
+import controller.RestauranteController;
+import controller.Serializer;
+
 import javax.swing.JButton;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
@@ -21,29 +25,26 @@ import java.awt.Font;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.IOException;
 
 public class MainView extends JFrame {
-	CadastroController cadastro = new CadastroController();
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MainView frame = new MainView();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	/**
 	 * Create the frame.
 	 */
-	public MainView() {
+	public MainView(MainController mainController) {
+
+		addWindowListener(new WindowAdapter()
+		{
+			@Override
+			public void windowClosing(WindowEvent e)
+			{
+				System.out.println("Closed");
+				Serializer.save();
+				e.getWindow().dispose();
+			}
+		});
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 473, 537);
@@ -65,7 +66,8 @@ public class MainView extends JFrame {
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
-							SelecionarQuarto frame = new SelecionarQuarto(cadastro);
+							SelecionarQuarto frame = new SelecionarQuarto(mainController);
+							frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 							frame.setVisible(true);
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -84,7 +86,8 @@ public class MainView extends JFrame {
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
-							ListaHospedesView frame = new ListaHospedesView(cadastro);
+							ListaHospedesView frame = new ListaHospedesView(mainController);
+							frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 							frame.setVisible(true);
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -98,6 +101,22 @@ public class MainView extends JFrame {
 		getContentPane().add(btnNewButton_2);
 		
 		JButton btnNewButton_3 = new JButton("RESTAURANTE");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							SelecionarHospedeView frame = new SelecionarHospedeView(mainController);
+							frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+							frame.setVisible(true);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			}
+		});
+
 		btnNewButton_3.setFont(new Font("Arial", Font.BOLD, 15));
 		btnNewButton_3.setBounds(10, 241, 447, 52);
 		getContentPane().add(btnNewButton_3);

@@ -1,8 +1,9 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class CatalogoQuartos {
+public class CatalogoQuartos implements Serializable {
     ArrayList<Quarto> listaQuartos;
 
     public CatalogoQuartos() {

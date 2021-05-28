@@ -1,11 +1,16 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Categoria {
-    ArrayList<Produto> listaProdutos;
-    String nome;
+public class Categoria implements Serializable {
+    private ArrayList<Produto> listaProdutos;
+    private String nome;
+
+    public ArrayList<Produto> getProdutos() {
+        return listaProdutos;
+    }
 
     public Categoria(String nome) {
         this.listaProdutos = new ArrayList<Produto>();
@@ -34,7 +39,7 @@ public class Categoria {
         listaProdutos.add(produto);
     }
 
-    public void removeProduto(String codBarras){
-        listaProdutos.removeIf(obj -> Objects.equals(obj.codBarras, codBarras));
+    public void removeProduto(Produto produto){
+        listaProdutos.remove(produto);
     }
 }

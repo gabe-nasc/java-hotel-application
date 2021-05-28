@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -8,12 +7,10 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controller.CadastroController;
+import controller.MainController;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-import javax.swing.JTextField;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
 import javax.swing.JButton;
 import javax.swing.JSpinner;
 import java.awt.event.ActionListener;
@@ -24,28 +21,11 @@ import javax.swing.event.ChangeEvent;
 public class SelecionarQuarto extends JFrame {
 
 	private JPanel contentPane;
-//	CadastroController cd;
+	private CadastroController cadastro;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(CadastroController cadastro) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					SelecionarQuarto frame = new SelecionarQuarto(cadastro);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	public SelecionarQuarto(MainController mainController) {
+		cadastro = mainController.cadastro;
 
-	/**
-	 * Create the frame.
-	 */
-	public SelecionarQuarto(CadastroController cadastro) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 336, 90);
 		contentPane = new JPanel();
@@ -77,6 +57,7 @@ public class SelecionarQuarto extends JFrame {
 					public void run() {
 						try {
 							CadastroHospedeView frame = new CadastroHospedeView(cadastro);
+							frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 							frame.setVisible(true);
 						} catch (Exception e) {
 							e.printStackTrace();

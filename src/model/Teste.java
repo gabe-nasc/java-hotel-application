@@ -4,12 +4,12 @@ import java.util.Date;
 
 public class Teste {
     public static void main(String[] args){
-        // Produto
-        Produto p1 = new Produto("AAA", "AAA", 2.98);
-        Produto p2 = new Produto("BBB", "BBB", 3.98);
-        Produto p3 = new Produto("CCC", "CCC", 4.98);
-        Produto p4 = new Produto("DDD", "DDD", 5.98);
-        Produto p5 = new Produto("FFF", "FFF", 6.98);
+        /* Produto
+        Produto p1 = new Produto("AAA", 2.98);
+        Produto p2 = new Produto("BBB", 3.98);
+        Produto p3 = new Produto("CCC", 4.98);
+        Produto p4 = new Produto("DDD", 5.98);
+        Produto p5 = new Produto("FFF", 6.98);
 
         // Categoria
         Categoria c1 = new Categoria("impar");
@@ -31,8 +31,8 @@ public class Teste {
         System.out.println("\n\n\n");
 
         // Pedido
-        Pedido pd1 = new Pedido(new Date());
-        Pedido pd2 = new Pedido(new Date());
+        ItemConta pd1 = new ItemConta(new Date());
+        ItemConta pd2 = new ItemConta(new Date());
 
         pd1.addProduto(p1);
         pd1.addProduto(p1);
@@ -75,7 +75,7 @@ public class Teste {
 
         hospedagem.setCheckOut(new Date());
         System.out.println(hospedagem.gerarRecibo("Dinheiro"));
-
+        */
 
     }
 }

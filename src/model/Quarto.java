@@ -1,6 +1,8 @@
 package model;
 
-public class Quarto implements IQuarto {
+import java.io.Serializable;
+
+public class Quarto implements IQuarto, Serializable {
     int numero, categoria;
     boolean disponivel;
     double valor;

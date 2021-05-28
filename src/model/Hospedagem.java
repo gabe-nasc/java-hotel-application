@@ -1,15 +1,22 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
 
-public class Hospedagem {
-    Date checkIn, checkOut;
-    Conta contaRestaurante = new Conta();
-    String formaPagamento;
-    ArrayList<Hospede> listaHospedes = new ArrayList<>();
-    ArrayList<Quarto> quartosReservados = new ArrayList<>();
+public class Hospedagem implements Serializable {
+    private Date checkIn, checkOut;
+    private Conta contaRestaurante;
+    private String formaPagamento;
+    private ArrayList<Hospede> listaHospedes = new ArrayList<>();
+    private ArrayList<Quarto> quartosReservados = new ArrayList<>();
+
+    public Hospedagem() {
+        this.contaRestaurante = new Conta();
+        this.listaHospedes = new ArrayList<>();
+        this.checkIn = new Date();
+    }
 
     public Date getCheckIn() {
         return checkIn;
@@ -92,6 +99,10 @@ public class Hospedagem {
         return Builder.toString();
     }
 
+    //public boolean hasHospede(String cpf){
+    //  listaHospedes.
+    //};
+
     public String gerarRecibo(String pgt){
         StringBuilder Builder = new StringBuilder();
         Builder.append("\t-- RECIBO DA HOSPEDAGEM --\n")
@@ -102,5 +113,13 @@ public class Hospedagem {
 
 
         return Builder.toString();
+    }
+
+    public void addToConta(ItemConta item){
+        this.contaRestaurante.addItem(item);
+    }
+
+    public void getRelatorioConta(){
+        System.out.println(this.contaRestaurante.listarConta());
     }
 }
