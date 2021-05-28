@@ -1,24 +1,13 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
 
-import controller.CadastroController;
-
-import com.jgoodies.forms.layout.FormSpecs;
 import controller.MainController;
-import controller.RestauranteController;
 import controller.Serializer;
 
 import javax.swing.JButton;
-import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 
 import java.awt.Font;
@@ -27,7 +16,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.IOException;
 
 public class MainView extends JFrame {
 	/**
@@ -66,7 +54,7 @@ public class MainView extends JFrame {
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
-							SelecionarQuarto frame = new SelecionarQuarto(mainController);
+							SelecionarQuartoView frame = new SelecionarQuartoView(mainController);
 							frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 							frame.setVisible(true);
 						} catch (Exception e) {

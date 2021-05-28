@@ -7,6 +7,7 @@ import java.util.List;
 import model.Endereco;
 import model.Hospedagem;
 import model.Hospede;
+import model.IHospede;
 
 public class CadastroController implements Serializable {
 	List<Hospedagem> hospedagem = new ArrayList<>();
@@ -27,8 +28,8 @@ public class CadastroController implements Serializable {
 		this.temp.addHospede(hospede);
 	}
 	
-	public List<Hospede> getHospedes() {
-		List<Hospede> tmp = new ArrayList<>();
+	public List<IHospede> getHospedes() {
+		List<IHospede> tmp = new ArrayList<>();
 		for (Hospedagem h: this.hospedagem) {
 			tmp.addAll(h.getListaHospedes());
 		}
@@ -42,7 +43,7 @@ public class CadastroController implements Serializable {
 	}
 
 
-    public Hospedagem getHospedagem(Hospede hospede) {
+    public Hospedagem getHospedagem(IHospede hospede) {
 		for (Hospedagem hp: hospedagem) {
 			if (hp.getListaHospedes().contains(hospede)){
 				return hp;

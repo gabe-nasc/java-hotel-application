@@ -6,16 +6,19 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Hospedagem implements Serializable {
+    private Integer diasDeEstadia, valorDiaria;
     private Date checkIn, checkOut;
     private Conta contaRestaurante;
     private String formaPagamento;
-    private ArrayList<Hospede> listaHospedes = new ArrayList<>();
-    private ArrayList<Quarto> quartosReservados = new ArrayList<>();
+    private IQuarto quarto;
+
+    private ArrayList<IHospede> listaHospedes;
 
     public Hospedagem() {
         this.contaRestaurante = new Conta();
         this.listaHospedes = new ArrayList<>();
         this.checkIn = new Date();
+
     }
 
     public Date getCheckIn() {
@@ -39,48 +42,21 @@ public class Hospedagem implements Serializable {
     }
 
     public void removeHospede(String cpf){
-        listaHospedes.removeIf(obj -> Objects.equals(obj.cpf, cpf));
+        listaHospedes.removeIf(obj -> Objects.equals(obj.getCpf(), cpf));
     }
 
-    public ArrayList<Hospede> getListaHospedes() {
+    public ArrayList<IHospede> getListaHospedes() {
         return listaHospedes;
     }
 
-    public CatalogoQuartos reservaQuarto(int categoria, CatalogoQuartos ctg){
-        for (Quarto q : ctg.listaQuartos){
-            if(q.categoria == categoria && q.disponivel){
-                q.setDisponivel(false);
-                quartosReservados.add(q);
-
-                return ctg;
-            };
-        };
-
-        return ctg;
-    };
-
     public double getValorTotal(){
-        double total = contaRestaurante.getTotalConta();
-
-        for(Quarto q : quartosReservados){
-            total += q.getValor();
-        };
-        return total;
+        return contaRestaurante.getTotalConta() + diasDeEstadia*valorDiaria;
     }
 
-    public CatalogoQuartos limpaQuartos(int numero, CatalogoQuartos ctg){
-        for (Quarto q : ctg.listaQuartos) {
-            if (quartosReservados.contains(q)){
-               q.setDisponivel(true);
-            }
-        };
-
-        return ctg;
-    }
     public String listarHospedes(){
         StringBuilder Builder = new StringBuilder();
         Builder.append("Nome ").append("(CPF | Email)\n");
-        for(Hospede h : listaHospedes){
+        for(IHospede h : listaHospedes){
             Builder.append(h.getNome()).append(" (")
                     .append(h.getCpf()).append(" | ")
                     .append(h.getEmail()).append(")\n");
@@ -88,32 +64,7 @@ public class Hospedagem implements Serializable {
         return Builder.toString();
     };
 
-    public String listarQuartos(){
-        StringBuilder Builder = new StringBuilder();
-        Builder.append("Numero ").append("(Categoria | Valor)\n");
-        for(Quarto q : quartosReservados){
-            Builder.append(q.getNumero()).append(" (")
-                    .append(q.getCategoria()).append(" | R$")
-                    .append(q.getValor()).append(")\n");
-        }
-        return Builder.toString();
-    }
 
-    //public boolean hasHospede(String cpf){
-    //  listaHospedes.
-    //};
-
-    public String gerarRecibo(String pgt){
-        StringBuilder Builder = new StringBuilder();
-        Builder.append("\t-- RECIBO DA HOSPEDAGEM --\n")
-                .append(listarHospedes()).append("------------\n")
-                .append(listarQuartos()).append("------------\n")
-                .append(contaRestaurante.listarConta()).append("------------\n")
-                .append("VALOR TOTAL DA HOSPEDAGEM: ").append(getValorTotal());
-
-
-        return Builder.toString();
-    }
 
     public void addToConta(ItemConta item){
         this.contaRestaurante.addItem(item);

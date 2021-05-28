@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 import controller.CadastroController;
 import controller.MainController;
 import model.Hospede;
+import model.IHospede;
 
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -25,7 +26,7 @@ public class ListaHospedesView extends JFrame {
 
 	private JPanel contentPane;
 	private CadastroController cadastro;
-	private HashMap<String, Hospede> hospedeMap = new HashMap<>();
+	private HashMap<String, IHospede> hospedeMap = new HashMap<>();
 
 	/**
 	 * Create the frame.
@@ -35,7 +36,7 @@ public class ListaHospedesView extends JFrame {
 
 		DefaultListModel values = new DefaultListModel();
 		System.out.println("Teste 2");
-		for (Hospede h: cadastro.getHospedes()) {
+		for (IHospede h: cadastro.getHospedes()) {
 			System.out.println("Teste");
 			String key = h.getNome() + ' '  + h.getCpf();
 			System.out.println(key);
@@ -81,8 +82,15 @@ public class ListaHospedesView extends JFrame {
 				previewArea.setVisible(true);
 
 				//System.out.println(textPane.getSelectedText());
-				Hospede tmp = hospedeMap.get(list.getSelectedValue().toString());
-				previewArea.setText(tmp.listaInfoHospede());
+				IHospede tmp = hospedeMap.get(list.getSelectedValue().toString());
+
+				StringBuilder Builder = new StringBuilder();
+
+				Builder.append("Nome:   ").append(tmp.getNome()).append("\n")
+						.append("CPF:    ").append(tmp.getCpf()).append("\n")
+						.append("Email:  ").append(tmp.getEmail()).append("\n");
+
+				previewArea.setText(Builder.toString());
 			}
 		});
 
@@ -91,7 +99,7 @@ public class ListaHospedesView extends JFrame {
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
-							EditarHospedeView frame = new EditarHospedeView(mainController, hospedeMap.get(list.getSelectedValue().toString()));
+							EditarHospedeView frame = new EditarHospedeView(mainController, (Hospede) hospedeMap.get(list.getSelectedValue().toString()));
 							frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 							frame.setVisible(true);
 						} catch (Exception e) {

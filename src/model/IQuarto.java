@@ -1,8 +1,10 @@
 package model;
 
 public interface IQuarto {
-    public int getNumero();
+    public Integer getNumero();
+    public Integer getQtdVagas();
     public boolean isDisponivel();
-    public double getValor();
-    public int getCategoria();
+    public void alocar();
+    public void liberar();
+    public String toString();
 }

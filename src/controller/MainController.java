@@ -10,6 +10,7 @@ import static controller.Serializer.load;
 public class MainController implements Serializable {
     public CadastroController cadastro = new CadastroController();
     public RestauranteController restaurante = new RestauranteController();
+    public QuartoController quarto = new QuartoController();
 
     public static void main(String[] args) {
         Serializer serializer = new Serializer();

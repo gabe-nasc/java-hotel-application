@@ -24,12 +24,13 @@ import controller.CadastroController;
 import controller.MainController;
 import model.Hospedagem;
 import model.Hospede;
+import model.IHospede;
 
 public class SelecionarHospedeView extends JFrame {
 
 	private JPanel contentPane;
 	private CadastroController cadastro;
-	private HashMap<String, Hospede> hospedeMap = new HashMap<>();
+	private HashMap<String, IHospede> hospedeMap = new HashMap<>();
 
 	/**
 	 * Create the frame.
@@ -38,7 +39,7 @@ public class SelecionarHospedeView extends JFrame {
 		cadastro = mainController.cadastro;
 		
 		DefaultListModel values = new DefaultListModel();
-		for (Hospede h: cadastro.getHospedes()) {
+		for (IHospede h: cadastro.getHospedes()) {
 			String key = h.getNome() + ' '  + h.getCpf();
 			values.addElement(key);
 			hospedeMap.put(key, h);
@@ -62,7 +63,7 @@ public class SelecionarHospedeView extends JFrame {
 		JButton confirmaButton = new JButton("Escolher");
 		confirmaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Hospede tmp = hospedeMap.get(list.getSelectedValue().toString());
+				IHospede tmp = hospedeMap.get(list.getSelectedValue().toString());
 				Hospedagem hospedagem = cadastro.getHospedagem(tmp);
 
 				EventQueue.invokeLater(new Runnable() {

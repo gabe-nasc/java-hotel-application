@@ -59,11 +59,4 @@ public class Hospede implements IHospede, Serializable {
         this.endereco = endereco;
     }
 
-    public String listaInfoHospede(){
-        StringBuilder Builder = new StringBuilder();
-        Builder.append("Nome:   ").append(getNome()).append("\n")
-                .append("CPF:    ").append(getCpf()).append("\n")
-                .append("Email:  ").append(getEmail()).append("\n");
-        return Builder.toString();
-    };
 }

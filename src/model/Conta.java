@@ -5,13 +5,16 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Conta implements Serializable {
-    ArrayList<ItemConta> listaItemContas = new ArrayList<>();
+    private ArrayList<ItemConta> listaItemContas = new ArrayList<>();
+
     public void addItem(ItemConta itemConta){
         listaItemContas.add(itemConta);
     }
+
     public void removeItem(ItemConta itemConta){
         listaItemContas.remove(itemConta);
     }
+
     public double getTotalConta(){
         double total = 0;
         for (ItemConta p : listaItemContas) {

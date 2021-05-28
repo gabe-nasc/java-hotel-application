@@ -3,36 +3,35 @@ package model;
 import java.io.Serializable;
 
 public class Quarto implements IQuarto, Serializable {
-    int numero, categoria;
-    boolean disponivel;
-    double valor;
+    private Integer numero, vagas;
+    private boolean disponivel;
 
-    public Quarto(int numero, int categoria, double valor) {
+    public Quarto(Integer numero, Integer vagas) {
         this.numero = numero;
-        this.categoria = categoria;
-        this.valor = valor;
         this.disponivel = true;
+        this.vagas = vagas;
     }
 
     public void setNumero(int numero) {
         this.numero = numero;
     }
 
-    public void setCategoria(int categoria) {
-        this.categoria = categoria;
+    public void liberar() {
+        this.disponivel = true;
     }
 
-    public void setDisponivel(boolean disponivel) {
-        this.disponivel = disponivel;
-    }
-
-    public void setValor(double valor) {
-        this.valor = valor;
+    public void alocar() {
+        this.disponivel = false;
     }
 
     @Override
-    public int getNumero() {
+    public Integer getNumero() {
         return this.numero;
+    }
+
+    @Override
+    public Integer getQtdVagas() {
+        return this.vagas;
     }
 
     @Override
@@ -40,13 +39,4 @@ public class Quarto implements IQuarto, Serializable {
         return this.disponivel;
     }
 
-    @Override
-    public double getValor() {
-        return this.valor;
-    }
-
-    @Override
-    public int getCategoria() {
-        return this.categoria;
-    }
 }
