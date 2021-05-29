@@ -6,18 +6,12 @@ import java.util.HashMap;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-import com.jgoodies.forms.layout.FormSpecs;
 import controller.CadastroController;
 import controller.MainController;
 import controller.RestauranteController;
 import model.*;
 
 import javax.swing.border.MatteBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.Map;
@@ -33,8 +27,8 @@ public class CriarPedidoView extends JFrame {
 	private Double totalItemConta = 0D;
 
 	public CriarPedidoView(MainController mainController, Hospedagem hospedagem) {
-		restaurante = mainController.restaurante;
-		cadastro = mainController.cadastro;
+		restaurante = mainController.getRestaurante();
+		cadastro = mainController.getCadastro();
 		catalogo = restaurante.getCatalogo();
 
 		DefaultListModel values = new DefaultListModel();

@@ -5,10 +5,8 @@ import controller.MainController;
 import controller.QuartoController;
 import model.ETipoPagamento;
 import model.Hospedagem;
-import model.IQuarto;
 import model.ItemConta;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.*;
@@ -16,7 +14,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 import java.awt.Color;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.Date;
@@ -52,8 +49,8 @@ public class CheckOutView extends JFrame {
 	public CheckOutView(MainController mainController, Hospedagem hospedagem) {
 		setResizable(false);
 		this.mainController = mainController;
-		this.cadastroController = mainController.cadastro;
-		this.quartoController = mainController.quarto;
+		this.cadastroController = mainController.getCadastro();
+		this.quartoController = mainController.getQuarto();
 
 		this.dtm = new DefaultTableModel();
 		this.rowToItem = new HashMap<>();

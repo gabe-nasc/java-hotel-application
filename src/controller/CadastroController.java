@@ -7,7 +7,7 @@ import java.util.List;
 import model.*;
 
 public class CadastroController implements Serializable {
-	List<Hospedagem> listaHospedagem = new ArrayList<>();
+	private List<Hospedagem> listaHospedagem = new ArrayList<>();
 
 	//private Hospedagem temp = new Hospedagem();
 	// public Integer novosHospedes;

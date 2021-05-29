@@ -3,15 +3,18 @@ package model;
 import java.io.Serializable;
 
 public class Hospede implements IHospede, Serializable {
-    String cpf, nome, telefone, email;
-    Endereco endereco;
+    private String cpf;
+    private String nome;
+    private String telefone;
+    private String email;
+    private Endereco endereco;
 
     public Hospede(String cpf, String nome, String telefone, String email, Endereco endereco) {
-        this.cpf = cpf;
-        this.nome = nome;
-        this.telefone = telefone;
-        this.email = email;
-        this.endereco = endereco;
+        this.setCpf(cpf);
+        this.setNome(nome);
+        this.setTelefone(telefone);
+        this.setEmail(email);
+        this.setEndereco(endereco);
     }
 
     @Override

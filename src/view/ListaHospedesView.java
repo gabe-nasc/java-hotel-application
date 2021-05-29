@@ -10,9 +10,6 @@ import controller.MainController;
 import model.Hospede;
 import model.IHospede;
 
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.border.MatteBorder;
@@ -38,7 +35,7 @@ public class ListaHospedesView extends JFrame {
 	 * Create the frame.
 	 */
 	public ListaHospedesView(MainController mainController) {
-		cadastro = mainController.cadastro;
+		cadastro = mainController.getCadastro();
 
 		values = new DefaultListModel();
 		stringsToSort = new ArrayList<>();

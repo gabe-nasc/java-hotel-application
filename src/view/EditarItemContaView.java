@@ -4,9 +4,6 @@ import controller.MainController;
 import controller.RestauranteController;
 import model.*;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionListener;
@@ -26,7 +23,7 @@ public class EditarItemContaView extends JFrame {
 	 */
 	public EditarItemContaView(MainController mainController, ItemConta item) {
 		this.mainController = mainController;
-		this.restauranteController = mainController.restaurante;
+		this.restauranteController = mainController.getRestaurante();
 
 		stringToProduto = new HashMap<>();
 		values = new DefaultComboBoxModel();

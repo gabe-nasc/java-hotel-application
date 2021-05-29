@@ -15,7 +15,6 @@ import controller.CadastroController;
 import controller.MainController;
 import controller.QuartoController;
 import model.Hospedagem;
-import model.IHospede;
 import model.IQuarto;
 
 public class SelecionarHospedeView extends JFrame {
@@ -30,8 +29,8 @@ public class SelecionarHospedeView extends JFrame {
 	 */
 	public SelecionarHospedeView(MainController mainController, Integer next) {
 		setResizable(false);
-		cadastroController = mainController.cadastro;
-		quartoController = mainController.quarto;
+		cadastroController = mainController.getCadastro();
+		quartoController = mainController.getQuarto();
 		
 		DefaultListModel values = new DefaultListModel();
 		for (IQuarto h: quartoController.getQuartosOcupados()) {

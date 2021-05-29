@@ -6,9 +6,9 @@ import java.awt.*;
 import java.io.Serializable;
 
 public class MainController implements Serializable {
-    public CadastroController cadastro = new CadastroController();
-    public RestauranteController restaurante = new RestauranteController();
-    public QuartoController quarto = new QuartoController();
+    private CadastroController cadastro = new CadastroController();
+    private RestauranteController restaurante = new RestauranteController();
+    private QuartoController quarto = new QuartoController();
 
     public static void main(String[] args) {
         Serializer serializer = new Serializer();
@@ -25,4 +25,27 @@ public class MainController implements Serializable {
         });
     }
 
+    public CadastroController getCadastro() {
+        return cadastro;
+    }
+
+    public void setCadastro(CadastroController cadastro) {
+        this.cadastro = cadastro;
+    }
+
+    public RestauranteController getRestaurante() {
+        return restaurante;
+    }
+
+    public void setRestaurante(RestauranteController restaurante) {
+        this.restaurante = restaurante;
+    }
+
+    public QuartoController getQuarto() {
+        return quarto;
+    }
+
+    public void setQuarto(QuartoController quarto) {
+        this.quarto = quarto;
+    }
 }

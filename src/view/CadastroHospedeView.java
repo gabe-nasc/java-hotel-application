@@ -6,7 +6,6 @@ import javax.swing.border.EmptyBorder;
 import controller.CadastroController;
 import controller.MainController;
 import controller.QuartoController;
-import controller.Serializer;
 import model.IQuarto;
 
 import java.awt.Font;
@@ -42,8 +41,8 @@ public class CadastroHospedeView extends JFrame {
 	 */
 	public CadastroHospedeView(MainController mainController, Integer numeroQuarto, String categoriaQuarto, Integer numeroDias, Integer numeroHospedes) {
 
-		this.cadastroController = mainController.cadastro;
-		this.quartoController = mainController.quarto;
+		this.cadastroController = mainController.getCadastro();
+		this.quartoController = mainController.getQuarto();
 		hospedesCadastrados = 0;
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

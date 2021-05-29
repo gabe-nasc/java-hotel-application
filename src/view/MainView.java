@@ -45,11 +45,7 @@ public class MainView extends JFrame {
 		setBounds(100, 100, 481, 470);
 		getContentPane().setLayout(null);
 		
-		JButton btnNewButton_1 = new JButton("New button");
-		btnNewButton_1.setBounds(685, 281, 89, 23);
-		getContentPane().add(btnNewButton_1);
-		
-		JLabel lblNewLabel = new JLabel("Hotel California");
+		JLabel lblNewLabel = new JLabel("Hotel Modelo");
 		lblNewLabel.setFont(new Font("Unispace", Font.BOLD, 24));
 		lblNewLabel.setBounds(0, 21, 467, 52);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);;

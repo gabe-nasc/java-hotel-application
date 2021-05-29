@@ -28,8 +28,8 @@ public class SelecionarQuartoView extends JFrame {
 
 	public SelecionarQuartoView(MainController mainController) {
 		setResizable(false);
-		cadastroController = mainController.cadastro;
-		quartoController = mainController.quarto;
+		cadastroController = mainController.getCadastro();
+		quartoController = mainController.getQuarto();
 		dtm = new DefaultTableModel();
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -6,9 +6,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class CategoriaQuarto implements Serializable {
-    String nome, descricao;
-    Double tarifaDiaria;
-    List<IQuarto> quartos;
+    private String nome;
+    private String descricao;
+    private Double tarifaDiaria;
+    private List<IQuarto> quartos;
     
     public String getNome() {
         return nome;
@@ -35,11 +36,11 @@ public class CategoriaQuarto implements Serializable {
     }
 
     public void addQuarto(Integer numero, Integer vagas){
-        quartos.add(new Quarto(numero, vagas));
+        getQuartos().add(new Quarto(numero, vagas));
     }
 
     public void removeQuarto(Integer numero){
-        quartos.removeIf(obj -> obj.getNumero().equals(numero));
+        getQuartos().removeIf(obj -> obj.getNumero().equals(numero));
     }
 
     public CategoriaQuarto(String nome, String descricao, Double tarifaDiaria) {
@@ -51,7 +52,7 @@ public class CategoriaQuarto implements Serializable {
     }
 
     public IQuarto alocaQuarto(Integer numeroQuarto) {
-        IQuarto qt = quartos.stream().filter(obj -> obj.getNumero().equals(numeroQuarto)).findAny().orElse(null);
+        IQuarto qt = getQuartos().stream().filter(obj -> obj.getNumero().equals(numeroQuarto)).findAny().orElse(null);
         if (qt == null) {
             return null;
         }
@@ -61,10 +62,14 @@ public class CategoriaQuarto implements Serializable {
     }
 
     public List<IQuarto> getQuartosOcupados() {
-        return quartos.stream().filter(obj->!obj.isDisponivel()).collect(Collectors.toList());
+        return getQuartos().stream().filter(obj->!obj.isDisponivel()).collect(Collectors.toList());
     }
 
     public List<IQuarto> getQuartosDisponiveis() {
-        return quartos.stream().filter(IQuarto::isDisponivel).collect(Collectors.toList());
+        return getQuartos().stream().filter(IQuarto::isDisponivel).collect(Collectors.toList());
+    }
+
+    public List<IQuarto> getQuartos() {
+        return quartos;
     }
 }

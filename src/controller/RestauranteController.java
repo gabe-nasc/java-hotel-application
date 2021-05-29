@@ -8,10 +8,6 @@ import java.util.Date;
 public class RestauranteController implements Serializable {
     private CatalogoProdutos catalogo = new CatalogoProdutos();
 
-    public CatalogoProdutos getCatalogo() {
-        return catalogo;
-    }
-
     public RestauranteController() {
         // Instanciando o menu default do restaurante
         Categoria comidas = new Categoria("Comidas");
@@ -27,6 +23,10 @@ public class RestauranteController implements Serializable {
 
         catalogo.addCategoriaProduto(comidas);
         catalogo.addCategoriaProduto(bebidas);
+    }
+
+    public CatalogoProdutos getCatalogo() {
+        return catalogo;
     }
 
     public ItemConta generateItemConta(IProduto produto, Integer qtd){

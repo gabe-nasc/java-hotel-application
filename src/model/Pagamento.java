@@ -4,14 +4,14 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Pagamento implements Serializable {
-    Date data;
-    Double value;
-    ETipoPagamento tipo;
+    private Date data;
+    private Double value;
+    private ETipoPagamento tipo;
 
     public Pagamento(Date data, Double value, ETipoPagamento tipo) {
-        this.data = data;
-        this.value = value;
-        this.tipo = tipo;
+        this.setData(data);
+        this.setValue(value);
+        this.setTipo(tipo);
     }
 
     public Date getData() {
@@ -24,5 +24,17 @@ public class Pagamento implements Serializable {
 
     public ETipoPagamento getTipo() {
         return tipo;
+    }
+
+    public void setData(Date data) {
+        this.data = data;
+    }
+
+    public void setValue(Double value) {
+        this.value = value;
+    }
+
+    public void setTipo(ETipoPagamento tipo) {
+        this.tipo = tipo;
     }
 }

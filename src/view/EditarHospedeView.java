@@ -1,14 +1,10 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import controller.CadastroController;
 import controller.MainController;
-import controller.Serializer;
 import model.Endereco;
 import model.Hospede;
 
@@ -38,7 +34,7 @@ public class EditarHospedeView extends JFrame {
 
 	public EditarHospedeView(MainController mainController, Hospede original) {
 		setResizable(false);
-		this.cadastro = mainController.cadastro;
+		this.cadastro = mainController.getCadastro();
 		String old_cpf = original.getCpf();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 498, 357);
@@ -147,7 +143,7 @@ public class EditarHospedeView extends JFrame {
 		email.setText(original.getEmail());
 		telefone.setText(original.getTelefone());
 		bairro.setText(original.getEndereco().getBairro());
-		cidade.setText(original.getEndereco().getCidade());
+		cidade.setText(original.getEndereco().getCidade().getNome());
 		uf.setSelectedItem(original.getEndereco().getUf());
 		endereco.setText(original.getEndereco().getLogradouro());
 		

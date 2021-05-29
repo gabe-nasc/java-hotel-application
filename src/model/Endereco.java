@@ -3,16 +3,14 @@ package model;
 import java.io.Serializable;
 
 public class Endereco implements Serializable {
-    String bairro;
-    String cidade;
-    String logradouro;
-    String uf;
+    private String bairro;
+    private String logradouro;
+    private Cidade cidade;
 
     public Endereco(String bairro, String cidade, String logradouro, String uf) {
-        this.bairro = bairro;
-        this.cidade = cidade;
-        this.logradouro = logradouro;
-        this.uf = uf;
+        this.setBairro(bairro);
+        this.setCidade(new Cidade(cidade, uf));
+        this.setLogradouro(logradouro);
     }
 
     public String getBairro() {
@@ -23,11 +21,11 @@ public class Endereco implements Serializable {
         this.bairro = bairro;
     }
 
-    public String getCidade() {
+    public Cidade getCidade() {
         return cidade;
     }
 
-    public void setCidade(String cidade) {
+    public void setCidade(Cidade cidade) {
         this.cidade = cidade;
     }
 
@@ -40,10 +38,7 @@ public class Endereco implements Serializable {
     }
 
     public String getUf() {
-        return uf;
+        return getCidade().getUf();
     }
 
-    public void setUf(String uf) {
-        this.uf = uf;
-    }
 }
