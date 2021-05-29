@@ -164,7 +164,7 @@ public class EditarHospedeView extends JFrame {
 				original.setEmail(email.getText());
 				original.setNome(nome.getText());
 				original.setTelefone(telefone.getText());
-				original.setEndereco(new Endereco(bairro.getText(), cidade.getText(), endereco.getText(), (String) uf.getSelectedItem()));
+				original.setEndereco(new Endereco(bairro.getText(), cidade.getText(), endereco.getText(), (String) uf.getSelectedItem(), Integer.parseInt(numero.getText())));
 
 				JOptionPane.showMessageDialog(null, "Hospede atualizado com sucesso!");
 

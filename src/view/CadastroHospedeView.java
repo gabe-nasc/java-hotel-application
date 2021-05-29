@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.regex.Pattern;
 
 public class CadastroHospedeView extends JFrame {
 
@@ -149,12 +150,32 @@ public class CadastroHospedeView extends JFrame {
 
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(nome.getText().isEmpty() || email.getText().isEmpty() || cpf.getText().isEmpty() || telefone.getText().isEmpty() || endereco.getText().isEmpty() || bairro.getText().isEmpty() || cidade.getText().isEmpty()){
+					JOptionPane.showMessageDialog(null,"Por favor, preencha todos os campos");
+					return;
+				}
+
+				try {
+					Integer.parseInt(numero.getText());
+				}
+				catch (NumberFormatException n) {
+					JOptionPane.showMessageDialog(null,"Por favor, insira um numero valido");
+					return;
+				}
+
+				String regex = "^(.+)@(.+)$";
+				Pattern pattern = Pattern.compile(regex);
+				if(!pattern.matcher(email.getText()).matches()){
+					JOptionPane.showMessageDialog(null,"Por favor, insira um email valido\n Email Inserido: " + email.getText());
+					return;
+				}
+
 				if (hospedesCadastrados == 0) {
 					IQuarto tmp = quartoController.alocaQuarto(numeroQuarto, categoriaQuarto);
 					numeroHospedagem = cadastroController.createHospedagem(tmp, numeroDias, quartoController.getValorCategoria(categoriaQuarto));
 				}
 
-				cadastroController.createHospede(nome.getText(), email.getText(), cpf.getText(), telefone.getText(), endereco.getText(), bairro.getText(), cidade.getText(), (String) uf.getSelectedItem(), numeroHospedagem);
+				cadastroController.createHospede(nome.getText(), email.getText(), cpf.getText(), telefone.getText(), endereco.getText(), bairro.getText(), cidade.getText(), (String) uf.getSelectedItem(), Integer.parseInt(numero.getText()), numeroHospedagem);
 				System.out.println(cadastroController.getHospedagem(numeroHospedagem).getResumoHospedagem());
 				hospedesCadastrados += 1;
 

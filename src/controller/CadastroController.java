@@ -17,9 +17,9 @@ public class CadastroController implements Serializable {
 
 		tmp.addHospede(hospede);
 	}
-	public void createHospede(String nome, String email, String cpf, String telefone, String endereco, String bairro, String cidade, String uf, Integer numero) {
-		Hospede hospede = new Hospede(cpf, nome, telefone, email, new Endereco(bairro, cidade, endereco, uf));
-		addHospedeToHospedagem(hospede, numero);
+	public void createHospede(String nome, String email, String cpf, String telefone, String endereco, String bairro, String cidade, String uf, Integer numeroEndereco, Integer numeroHospedagem) {
+		Hospede hospede = new Hospede(cpf, nome, telefone, email, new Endereco(bairro, cidade, endereco, uf, numeroEndereco));
+		addHospedeToHospedagem(hospede, numeroHospedagem);
 	}
 	
 	public List<IHospede> getHospedes() {
