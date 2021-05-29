@@ -40,6 +40,15 @@ public class QuartoController implements Serializable {
         return ctg.getQuartosDisponiveis();
     }
 
+    public List<IQuarto> getQuartosOcupados(){
+        List<IQuarto> all = new ArrayList<>();
+        for (CategoriaQuarto ctg: this.catalogo.getCategorias()) {
+            all.addAll(ctg.getQuartosOcupados());
+        }
+
+        return all;
+    }
+
     public List<CategoriaQuarto> getCategorias() {
         return catalogo.getCategorias();
     }
@@ -52,4 +61,14 @@ public class QuartoController implements Serializable {
 
         return tmp;
     }
+
+    public IQuarto alocaQuarto(Integer numero, String categoria){
+        return catalogo.alocaQuarto(numero, categoria);
+    }
+
+    public Double getValorCategoria(String categoria){
+        return catalogo.getCategoria(categoria).getTarifaDiaria();
+
+    }
+
 }

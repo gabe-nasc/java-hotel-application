@@ -17,13 +17,13 @@ public class RestauranteController implements Serializable {
         Categoria comidas = new Categoria("Comidas");
         Categoria bebidas = new Categoria("Bebidas");
 
-        comidas.addProduto(new Produto("Frango a Milanesa", 19.90));
-        comidas.addProduto(new Produto("Alcatra (Churrasco)", 21.90));
-        comidas.addProduto(new Produto("Salmão", 29.90));
+        comidas.addProduto(new Produto("Frango a Milanesa", 19.00));
+        comidas.addProduto(new Produto("Alcatra (Churrasco)", 21.00));
+        comidas.addProduto(new Produto("Peixe", 29.00));
 
-        bebidas.addProduto(new Produto("Coca-Cola Lata 300ml", 4.90));
-        bebidas.addProduto(new Produto("Agua sem Gás Garrafa 500ml", 3.90));
-        bebidas.addProduto(new Produto("Vinho Tinto 1.5L", 26.90));
+        bebidas.addProduto(new Produto("Coca-Cola Lata", 4.00));
+        bebidas.addProduto(new Produto("Agua sem Gas Garrafa", 3.00));
+        bebidas.addProduto(new Produto("Vinho Tinto", 26.00));
 
         catalogo.addCategoriaProduto(comidas);
         catalogo.addCategoriaProduto(bebidas);

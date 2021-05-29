@@ -1,16 +1,19 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import controller.CadastroController;
+import controller.MainController;
+import controller.QuartoController;
+import controller.Serializer;
+import model.IQuarto;
 
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class CadastroHospedeView extends JFrame {
 
@@ -29,33 +32,21 @@ public class CadastroHospedeView extends JFrame {
 	private JTextField cidade;
 	private JButton btnNewButton;
 	private JTextField endereco;
-	
-	CadastroController cadastro;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(CadastroController cd) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					CadastroHospedeView frame = new CadastroHospedeView(cd);
-					frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private Integer hospedesCadastrados;
+	private Integer numeroHospedagem;
+	private CadastroController cadastroController;
+	private QuartoController quartoController;
 
 	/**
 	 * Create the frame.
 	 */
-	public CadastroHospedeView(CadastroController cd) {
-		this.cadastro = cd;
+	public CadastroHospedeView(MainController mainController, Integer numeroQuarto, String categoriaQuarto, Integer numeroDias, Integer numeroHospedes) {
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.cadastroController = mainController.cadastro;
+		this.quartoController = mainController.quarto;
+		hospedesCadastrados = 0;
+
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 498, 425);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -156,18 +147,24 @@ public class CadastroHospedeView extends JFrame {
 		endereco.setColumns(10);
 		endereco.setBounds(91, 157, 381, 20);
 		contentPane.add(endereco);
-		
-		
+
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cadastro.novosHospedes -= 1;
-				cadastro.createHospede(nome.getText(), email.getText(), cpf.getText(), telefone.getText(), endereco.getText(), bairro.getText(), cidade.getText(), (String) uf.getSelectedItem());
+				if (hospedesCadastrados == 0) {
+					IQuarto tmp = quartoController.alocaQuarto(numeroQuarto, categoriaQuarto);
+					numeroHospedagem = cadastroController.createHospedagem(tmp, numeroDias, quartoController.getValorCategoria(categoriaQuarto));
+				}
+
+				cadastroController.createHospede(nome.getText(), email.getText(), cpf.getText(), telefone.getText(), endereco.getText(), bairro.getText(), cidade.getText(), (String) uf.getSelectedItem(), numeroHospedagem);
+				System.out.println(cadastroController.getHospedagem(numeroHospedagem).getResumoHospedagem());
+				hospedesCadastrados += 1;
 
 				JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
-				if(cadastro.novosHospedes == 0){
-					cadastro.createHospedagem();
+
+				if(hospedesCadastrados.equals(numeroHospedes)){
 					dispose();
 				}
+
 
 				nome.setText("");
 				email.setText("");
@@ -177,6 +174,19 @@ public class CadastroHospedeView extends JFrame {
 				bairro.setText("");
 				cidade.setText("");
 				uf.setSelectedIndex(0);
+			}
+		});
+
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				try {
+					cadastroController.deleteHospedagem(numeroHospedagem);
+				}
+				catch(NullPointerException n){
+					System.out.println("Nao ha hospedagem para deletar");
+				}
+
 			}
 		});
 	}

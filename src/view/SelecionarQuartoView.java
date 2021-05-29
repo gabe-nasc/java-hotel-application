@@ -33,33 +33,34 @@ public class SelecionarQuartoView extends JFrame {
 		dtm = new DefaultTableModel();
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 336, 543);
+		setBounds(100, 100, 428, 543);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Hospedes");
-		lblNewLabel.setBounds(10, 11, 82, 31);
+		lblNewLabel.setBounds(10, 11, 58, 31);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblNewLabel);
 		
 		JButton iniciaCadastro = new JButton("OK");
-		iniciaCadastro.setBounds(10, 444, 300, 49);
+		iniciaCadastro.setBounds(10, 444, 388, 49);
 		contentPane.add(iniciaCadastro);
 		
 		JSpinner numeroDeHospedes = new JSpinner();
 
 		numeroDeHospedes.setModel(new SpinnerNumberModel(1, 1, 5, 1));
-		numeroDeHospedes.setBounds(102, 16, 42, 20);
+		numeroDeHospedes.setBounds(78, 16, 42, 20);
 		contentPane.add(numeroDeHospedes);
 
 		JComboBox categoriaQuarto = new JComboBox();
 		categoriaQuarto.setModel(new DefaultComboBoxModel(quartoController.getNomeCategorias().toArray()));
-		categoriaQuarto.setBounds(179, 15, 131, 22);
+		categoriaQuarto.setBounds(267, 15, 131, 22);
 		contentPane.add(categoriaQuarto);
 		
 		table = new JTable();
+		table.setShowVerticalLines(false);
 
 		dtm.setColumnIdentifiers(new String[] {"Numero", "Vagas"});
 		for (IQuarto qt: quartoController.getQuartosDisponiveis((String) categoriaQuarto.getSelectedItem())) {
@@ -69,8 +70,18 @@ public class SelecionarQuartoView extends JFrame {
 		table.setModel(dtm);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-		table.setBounds(10, 52, 300, 381);
+		table.setBounds(10, 52, 388, 381);
 		contentPane.add(table);
+		
+		JSpinner numeroDias = new JSpinner();
+		numeroDias.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+		numeroDias.setBounds(215, 16, 42, 20);
+		contentPane.add(numeroDias);
+		
+		JLabel lblDias = new JLabel("Dias");
+		lblDias.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDias.setBounds(147, 11, 58, 31);
+		contentPane.add(lblDias);
 
 
 		numeroDeHospedes.addChangeListener(new ChangeListener() {
@@ -84,7 +95,6 @@ public class SelecionarQuartoView extends JFrame {
 					}
 				}
 				table.setModel(dtm);
-				cadastroController.setNovosHospedes((Integer) numeroDeHospedes.getValue());
 			}
 		});
 
@@ -99,7 +109,6 @@ public class SelecionarQuartoView extends JFrame {
 				}
 
 				table.setModel(dtm);
-				cadastroController.setNovosHospedes((Integer) numeroDeHospedes.getValue());
 			}
 		});
 
@@ -108,8 +117,19 @@ public class SelecionarQuartoView extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
+						Integer rowIndex = table.getSelectedRow();
+						System.out.println("RowIndex: "+rowIndex);
+						if (rowIndex == -1){
+							JOptionPane.showMessageDialog(null, "Nenhum quarto foi selecionado!");
+							return;
+						}
+						Integer numeroQuarto = (Integer) table.getValueAt(rowIndex, 0);
+						System.out.println("num: " + numeroQuarto);
+
+						System.out.println("ctg: " + (String) categoriaQuarto.getSelectedItem());
+
 						try {
-							CadastroHospedeView frame = new CadastroHospedeView(cadastroController);
+							CadastroHospedeView frame = new CadastroHospedeView(mainController, numeroQuarto, (String) categoriaQuarto.getSelectedItem(), (Integer) numeroDias.getValue(), (Integer) numeroDeHospedes.getValue());
 							frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 							frame.setVisible(true);
 						} catch (Exception e) {

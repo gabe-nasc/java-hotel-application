@@ -2,6 +2,7 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Conta implements Serializable {
@@ -35,5 +36,9 @@ public class Conta implements Serializable {
                 .append(getTotalConta()).append("\n");
 
         return Builder.toString();
+    }
+
+    public List<ItemConta> getListaConta() {
+        return this.listaItemContas;
     }
 }

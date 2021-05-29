@@ -50,14 +50,18 @@ public class CategoriaQuarto implements Serializable {
         this.quartos = new ArrayList<>();
     }
 
-    public Integer alocaQuarto(Integer qtdHospedes) {
-        IQuarto qt = quartos.stream().filter(obj -> obj.getQtdVagas() <= qtdHospedes && obj.isDisponivel()).findAny().orElse(null);
-
+    public IQuarto alocaQuarto(Integer numeroQuarto) {
+        IQuarto qt = quartos.stream().filter(obj -> obj.getNumero().equals(numeroQuarto)).findAny().orElse(null);
         if (qt == null) {
             return null;
         }
 
-        return qt.getNumero();
+        qt.alocar();
+        return qt;
+    }
+
+    public List<IQuarto> getQuartosOcupados() {
+        return quartos.stream().filter(obj->!obj.isDisponivel()).collect(Collectors.toList());
     }
 
     public List<IQuarto> getQuartosDisponiveis() {

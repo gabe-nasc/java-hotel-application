@@ -31,7 +31,14 @@ public class CatalogoQuartos implements Serializable {
         }
     }
 
+    public IQuarto alocaQuarto(Integer numeroQuarto, String categoria){
+        CategoriaQuarto ctg = getCategoria(categoria);
+
+        return ctg.alocaQuarto(numeroQuarto);
+    }
+
     public List<CategoriaQuarto> getCategorias() {
         return this.categorias;
     }
+
 }

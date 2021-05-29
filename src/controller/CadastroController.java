@@ -4,47 +4,48 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Endereco;
-import model.Hospedagem;
-import model.Hospede;
-import model.IHospede;
+import model.*;
 
 public class CadastroController implements Serializable {
-	List<Hospedagem> hospedagem = new ArrayList<>();
+	List<Hospedagem> listaHospedagem = new ArrayList<>();
 
-	private Hospedagem temp = new Hospedagem();
-	public Integer novosHospedes;
+	//private Hospedagem temp = new Hospedagem();
+	// public Integer novosHospedes;
 
-	public Integer getNovosHospedes() {
-		return novosHospedes;
+	public void addHospedeToHospedagem(Hospede hospede, Integer numeroHospedagem){
+		Hospedagem tmp = listaHospedagem.stream().filter(obj -> obj.getNumero().equals(numeroHospedagem)).findFirst().orElse(null);
+
+		tmp.addHospede(hospede);
 	}
-
-	public void setNovosHospedes(Integer novosHospedes) {
-		this.novosHospedes = novosHospedes;
-	}
-
-	public void createHospede(String nome, String email, String cpf, String telefone, String endereco, String bairro, String cidade, String uf) {
+	public void createHospede(String nome, String email, String cpf, String telefone, String endereco, String bairro, String cidade, String uf, Integer numero) {
 		Hospede hospede = new Hospede(cpf, nome, telefone, email, new Endereco(bairro, cidade, endereco, uf));
-		this.temp.addHospede(hospede);
+		addHospedeToHospedagem(hospede, numero);
 	}
 	
 	public List<IHospede> getHospedes() {
 		List<IHospede> tmp = new ArrayList<>();
-		for (Hospedagem h: this.hospedagem) {
-			tmp.addAll(h.getListaHospedes());
+		System.out.println("Inside getHospedes");
+		for (Hospedagem h: this.listaHospedagem) {
+			System.out.println(h.getCheckOut());
+			if (h.getCheckOut() == null) {
+				tmp.addAll(h.getListaHospedes());
+			}
 		}
 
 		return tmp;
 	}
 
-	public void createHospedagem(){
-		this.hospedagem.add(temp);
-		this.temp = new Hospedagem();
+	public Integer createHospedagem(IQuarto quarto, Integer numeroDeDias, Double valorDiaria){
+		Hospedagem tmp = new Hospedagem(quarto, numeroDeDias, valorDiaria);
+
+		this.listaHospedagem.add(tmp);
+
+		return tmp.getNumero();
 	}
 
 
     public Hospedagem getHospedagem(IHospede hospede) {
-		for (Hospedagem hp: hospedagem) {
+		for (Hospedagem hp: listaHospedagem) {
 			if (hp.getListaHospedes().contains(hospede)){
 				return hp;
 			};
@@ -55,5 +56,25 @@ public class CadastroController implements Serializable {
 
 	public void gerarRelatorioConta(Hospedagem hospedagem){
 		hospedagem.getRelatorioConta();
+	}
+
+	public Hospedagem getHospedagem(IQuarto tmp) {
+		return this.listaHospedagem.stream().filter(obj -> obj.getNumeroQuarto().equals(tmp.getNumero()) && obj.getCheckOut() == null).findFirst().orElse(null);
+	}
+
+    public void deleteHospede(IHospede tmp) {
+		Hospedagem h = listaHospedagem.stream().filter(obj->obj.getListaHospedes().contains(tmp)).findFirst().orElse(null);
+		if (h != null) {
+			h.removeHospede(tmp.getCpf());
+		}
+    }
+
+	public Hospedagem getHospedagem(Integer numeroHospedagem) {
+		return listaHospedagem.stream().filter(obj->obj.getNumero().equals(numeroHospedagem)).findFirst().orElse(null);
+	}
+
+	public void deleteHospedagem(Integer numeroHospedagem) {
+		listaHospedagem.stream().filter(obj -> obj.getNumero().equals(numeroHospedagem)).findFirst().orElse(null).liberaQuarto();
+		listaHospedagem.removeIf(obj -> obj.getNumero().equals(numeroHospedagem));
 	}
 }

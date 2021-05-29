@@ -16,12 +16,19 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.WindowFocusListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class MainView extends JFrame {
+	private MainController mainController;
 	/**
 	 * Create the frame.
 	 */
-	public MainView(MainController mainController) {
+	public MainView(MainController mc) {
+		this.mainController = mc;
 
 		addWindowListener(new WindowAdapter()
 		{
@@ -35,7 +42,7 @@ public class MainView extends JFrame {
 		});
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 473, 537);
+		setBounds(100, 100, 481, 470);
 		getContentPane().setLayout(null);
 		
 		JButton btnNewButton_1 = new JButton("New button");
@@ -48,7 +55,7 @@ public class MainView extends JFrame {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);;
 		getContentPane().add(lblNewLabel);
 		
-		JButton btnNewButton = new JButton("CADASTRAR HOSPEDE");
+		JButton btnNewButton = new JButton("Check In");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				EventQueue.invokeLater(new Runnable() {
@@ -68,7 +75,7 @@ public class MainView extends JFrame {
 		btnNewButton.setBounds(10, 115, 447, 52);
 		getContentPane().add(btnNewButton);
 		
-		JButton btnNewButton_2 = new JButton("LISTAR HOSPEDES");
+		JButton btnNewButton_2 = new JButton("Lista Hospedes");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				EventQueue.invokeLater(new Runnable() {
@@ -88,13 +95,13 @@ public class MainView extends JFrame {
 		btnNewButton_2.setBounds(10, 178, 447, 52);
 		getContentPane().add(btnNewButton_2);
 		
-		JButton btnNewButton_3 = new JButton("RESTAURANTE");
+		JButton btnNewButton_3 = new JButton("Restaurante");
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
-							SelecionarHospedeView frame = new SelecionarHospedeView(mainController);
+							SelecionarHospedeView frame = new SelecionarHospedeView(mainController, 2);
 							frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 							frame.setVisible(true);
 						} catch (Exception e) {
@@ -109,14 +116,35 @@ public class MainView extends JFrame {
 		btnNewButton_3.setBounds(10, 241, 447, 52);
 		getContentPane().add(btnNewButton_3);
 		
-		JButton btnNewButton_4 = new JButton("CHECK OUT");
+		JButton btnNewButton_4 = new JButton("Check out");
+		btnNewButton_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							SelecionarHospedeView frame = new SelecionarHospedeView(mainController, 1);
+							frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+							frame.setVisible(true);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			}
+		});
 		btnNewButton_4.setFont(new Font("Arial", Font.BOLD, 15));
 		btnNewButton_4.setBounds(10, 304, 447, 52);
 		getContentPane().add(btnNewButton_4);
 		
-		JButton btnNewButton_5 = new JButton("LISTAR QUARTOS");
-		btnNewButton_5.setFont(new Font("Arial", Font.BOLD, 15));
-		btnNewButton_5.setBounds(10, 367, 447, 52);
-		getContentPane().add(btnNewButton_5);
+		JButton btnNewButton_5_1 = new JButton("Sair");
+		btnNewButton_5_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Serializer.save();
+				dispose();
+			}
+		});
+		btnNewButton_5_1.setFont(new Font("Arial", Font.BOLD, 15));
+		btnNewButton_5_1.setBounds(10, 367, 447, 52);
+		getContentPane().add(btnNewButton_5_1);
 	}
 }

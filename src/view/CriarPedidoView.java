@@ -47,8 +47,6 @@ public class CriarPedidoView extends JFrame {
 			}
 		}
 
-		System.out.println(values);
-
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 576, 568);
 		contentPane = new JPanel();
@@ -107,8 +105,17 @@ public class CriarPedidoView extends JFrame {
 		contentPane.add(qtdRemover);
 		
 		JButton confirmarButton = new JButton("Confirmar Pedido");
-		confirmarButton.setBounds(10, 481, 540, 37);
+		confirmarButton.setBounds(286, 481, 264, 37);
 		contentPane.add(confirmarButton);
+		
+		JButton cancelarButton = new JButton("Cancelar");
+		cancelarButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		cancelarButton.setBounds(10, 481, 266, 37);
+		contentPane.add(cancelarButton);
 
 		// ADICIONAR ITEM AO CARRINHO
 		adicionarItemButton.addActionListener(new ActionListener() {

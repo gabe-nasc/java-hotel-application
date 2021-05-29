@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -8,39 +7,35 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.ListSelectionModel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 import controller.CadastroController;
 import controller.MainController;
+import controller.QuartoController;
 import model.Hospedagem;
-import model.Hospede;
 import model.IHospede;
+import model.IQuarto;
 
 public class SelecionarHospedeView extends JFrame {
 
+	private final QuartoController quartoController;
 	private JPanel contentPane;
-	private CadastroController cadastro;
-	private HashMap<String, IHospede> hospedeMap = new HashMap<>();
+	private CadastroController cadastroController;
+	private HashMap<Integer, IQuarto> hospedeMap = new HashMap<>();
 
 	/**
 	 * Create the frame.
 	 */
-	public SelecionarHospedeView(MainController mainController) {
-		cadastro = mainController.cadastro;
+	public SelecionarHospedeView(MainController mainController, Integer next) {
+		setResizable(false);
+		cadastroController = mainController.cadastro;
+		quartoController = mainController.quarto;
 		
 		DefaultListModel values = new DefaultListModel();
-		for (IHospede h: cadastro.getHospedes()) {
-			String key = h.getNome() + ' '  + h.getCpf();
+		for (IQuarto h: quartoController.getQuartosOcupados()) {
+			Integer key = h.getNumero();
 			values.addElement(key);
 			hospedeMap.put(key, h);
 		}
@@ -55,32 +50,54 @@ public class SelecionarHospedeView extends JFrame {
 		JList list = new JList(values);
 		list.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		list.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-		list.setBounds(10, 11, 275, 448);
+		list.setBounds(10, 41, 275, 418);
 		list.setModel(values);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		contentPane.add(list);
+
+		DefaultListCellRenderer renderer = (DefaultListCellRenderer) list.getCellRenderer();
+		renderer.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		JButton confirmaButton = new JButton("Escolher");
 		confirmaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				IHospede tmp = hospedeMap.get(list.getSelectedValue().toString());
-				Hospedagem hospedagem = cadastro.getHospedagem(tmp);
-
-				EventQueue.invokeLater(new Runnable() {
-					public void run() {
-						try {
-							CriarPedidoView frame = new CriarPedidoView(mainController, hospedagem);
-							frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-							frame.setVisible(true);
-						} catch (Exception e) {
-							e.printStackTrace();
+				IQuarto tmp = hospedeMap.get((Integer) list.getSelectedValue());
+				Hospedagem hospedagem = cadastroController.getHospedagem(tmp);
+				if(next.equals(1)){
+					EventQueue.invokeLater(new Runnable() {
+						public void run() {
+							try {
+								CheckOutView frame = new CheckOutView(mainController, hospedagem);
+								frame.setVisible(true);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
 						}
-					}
-				});
+					});
+				}
+				else if (next.equals(2)){
+					EventQueue.invokeLater(new Runnable() {
+						public void run() {
+							try {
+								CriarPedidoView frame = new CriarPedidoView(mainController, hospedagem);
+								frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+								frame.setVisible(true);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					});
+				}
+				dispose();
 			}
 		});
 		confirmaButton.setBounds(10, 470, 275, 33);
 		contentPane.add(confirmaButton);
+		
+		JLabel lblNewLabel = new JLabel("Selecione um quarto");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(10, 16, 275, 14);
+		contentPane.add(lblNewLabel);
 	}
 
 }

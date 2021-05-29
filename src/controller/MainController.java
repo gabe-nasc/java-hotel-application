@@ -5,8 +5,6 @@ import view.MainView;
 import java.awt.*;
 import java.io.Serializable;
 
-import static controller.Serializer.load;
-
 public class MainController implements Serializable {
     public CadastroController cadastro = new CadastroController();
     public RestauranteController restaurante = new RestauranteController();

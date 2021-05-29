@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 
 import controller.CadastroController;
 import controller.MainController;
+import controller.Serializer;
 import model.Endereco;
 import model.Hospede;
 
@@ -36,10 +37,11 @@ public class EditarHospedeView extends JFrame {
 	private CadastroController cadastro;
 
 	public EditarHospedeView(MainController mainController, Hospede original) {
+		setResizable(false);
 		this.cadastro = mainController.cadastro;
 		String old_cpf = original.getCpf();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 498, 425);
+		setBounds(100, 100, 498, 357);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -125,9 +127,9 @@ public class EditarHospedeView extends JFrame {
 		cidade.setBounds(255, 224, 217, 20);
 		contentPane.add(cidade);
 
-		btnNewButton = new JButton("CADASTRAR");
-		btnNewButton.setFont(new Font("Arial", Font.BOLD, 15));
-		btnNewButton.setBounds(10, 263, 462, 61);
+		btnNewButton = new JButton("Concluir");
+		btnNewButton.setFont(new Font("Arial", Font.PLAIN, 15));
+		btnNewButton.setBounds(267, 263, 205, 40);
 		contentPane.add(btnNewButton);
 
 		JLabel lblEndereco = new JLabel("Endere\u00E7o");
@@ -148,6 +150,16 @@ public class EditarHospedeView extends JFrame {
 		cidade.setText(original.getEndereco().getCidade());
 		uf.setSelectedItem(original.getEndereco().getUf());
 		endereco.setText(original.getEndereco().getLogradouro());
+		
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		btnCancelar.setFont(new Font("Arial", Font.PLAIN, 15));
+		btnCancelar.setBounds(20, 263, 205, 40);
+		contentPane.add(btnCancelar);
 
 
 		btnNewButton.addActionListener(new ActionListener() {
@@ -159,6 +171,7 @@ public class EditarHospedeView extends JFrame {
 				original.setEndereco(new Endereco(bairro.getText(), cidade.getText(), endereco.getText(), (String) uf.getSelectedItem()));
 
 				JOptionPane.showMessageDialog(null, "Hospede atualizado com sucesso!");
+
 				dispose();
 			}
 		});
