@@ -1,6 +1,21 @@
 package view;
 
-import javax.swing.*;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.regex.Pattern;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import controller.CadastroController;
@@ -8,15 +23,12 @@ import controller.MainController;
 import controller.QuartoController;
 import model.IQuarto;
 
-import java.awt.Font;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.util.regex.Pattern;
-
 public class CadastroHospedeView extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7299770122692712191L;
 	private JPanel contentPane;
 	private JTextField nome;
 	private JTextField email;
@@ -30,10 +42,17 @@ public class CadastroHospedeView extends JFrame {
 	private JTextField bairro;
 	private JLabel lblUf;
 	private JTextField cidade;
+	private JLabel lblEndereco;
 	private JButton btnNewButton;
 	private JTextField endereco;
+	private JComboBox uf;
+	private JLabel lblCidade;
+	private JLabel lblNewLabel;
+	private JLabel lblNewLabel_1;
+
 	private Integer hospedesCadastrados;
 	private Integer numeroHospedagem;
+
 	private CadastroController cadastroController;
 	private QuartoController quartoController;
 
@@ -53,7 +72,7 @@ public class CadastroHospedeView extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Nome");
+		lblNewLabel = new JLabel("Nome");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(10, 11, 60, 25);
 		contentPane.add(lblNewLabel);
@@ -63,7 +82,7 @@ public class CadastroHospedeView extends JFrame {
 		contentPane.add(nome);
 		nome.setColumns(10);
 		
-		JLabel lblNewLabel_1 = new JLabel("Email");
+		lblNewLabel_1 = new JLabel("Email");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setBounds(10, 47, 60, 25);
 		contentPane.add(lblNewLabel_1);
@@ -118,12 +137,12 @@ public class CadastroHospedeView extends JFrame {
 		lblUf.setBounds(10, 227, 60, 25);
 		contentPane.add(lblUf);
 		
-		JComboBox uf = new JComboBox();
+		uf = new JComboBox();
 		uf.setModel(new DefaultComboBoxModel(new String[] {"AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RN", "RO", "RR", "RS", "SC", "SE", "SP", "TO"}));
 		uf.setBounds(91, 224, 72, 22);
 		contentPane.add(uf);
 		
-		JLabel lblCidade = new JLabel("Cidade");
+		lblCidade = new JLabel("Cidade");
 		lblCidade.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCidade.setBounds(185, 227, 60, 25);
 		contentPane.add(lblCidade);
@@ -137,8 +156,8 @@ public class CadastroHospedeView extends JFrame {
 		btnNewButton.setFont(new Font("Arial", Font.BOLD, 15));
 		btnNewButton.setBounds(10, 263, 462, 61);
 		contentPane.add(btnNewButton);
-		
-		JLabel lblEndereco = new JLabel("Endere\u00E7o");
+
+		lblEndereco = new JLabel("Endere\u00E7o");
 		lblEndereco.setHorizontalAlignment(SwingConstants.CENTER);
 		lblEndereco.setBounds(10, 155, 60, 25);
 		contentPane.add(lblEndereco);
@@ -150,64 +169,72 @@ public class CadastroHospedeView extends JFrame {
 
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(nome.getText().isEmpty() || email.getText().isEmpty() || cpf.getText().isEmpty() || telefone.getText().isEmpty() || endereco.getText().isEmpty() || bairro.getText().isEmpty() || cidade.getText().isEmpty()){
-					JOptionPane.showMessageDialog(null,"Por favor, preencha todos os campos");
-					return;
-				}
-
-				try {
-					Integer.parseInt(numero.getText());
-				}
-				catch (NumberFormatException n) {
-					JOptionPane.showMessageDialog(null,"Por favor, insira um numero valido");
-					return;
-				}
-
-				String regex = "^(.+)@(.+)$";
-				Pattern pattern = Pattern.compile(regex);
-				if(!pattern.matcher(email.getText()).matches()){
-					JOptionPane.showMessageDialog(null,"Por favor, insira um email valido\n Email Inserido: " + email.getText());
-					return;
-				}
-
-				if (hospedesCadastrados == 0) {
-					IQuarto tmp = quartoController.alocaQuarto(numeroQuarto, categoriaQuarto);
-					numeroHospedagem = cadastroController.createHospedagem(tmp, numeroDias, quartoController.getValorCategoria(categoriaQuarto));
-				}
-
-				cadastroController.createHospede(nome.getText(), email.getText(), cpf.getText(), telefone.getText(), endereco.getText(), bairro.getText(), cidade.getText(), (String) uf.getSelectedItem(), Integer.parseInt(numero.getText()), numeroHospedagem);
-				System.out.println(cadastroController.getHospedagem(numeroHospedagem).getResumoHospedagem());
-				hospedesCadastrados += 1;
-
-				JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
-
-				if(hospedesCadastrados.equals(numeroHospedes)){
-					dispose();
-				}
-
-
-				nome.setText("");
-				email.setText("");
-				cpf.setText("");
-				telefone.setText("");
-				endereco.setText("");
-				bairro.setText("");
-				cidade.setText("");
-				uf.setSelectedIndex(0);
+				confirmRegistro(numeroQuarto,  numeroDias,  numeroHospedes,  categoriaQuarto);
 			}
 		});
 
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				try {
-					cadastroController.deleteHospedagem(numeroHospedagem);
-				}
-				catch(NullPointerException n){
-					System.out.println("Nao ha hospedagem para deletar");
-				}
-
+				windowClosingBehavior();
 			}
 		});
+
+
 	}
+	private void windowClosingBehavior(){
+		try {
+			cadastroController.deleteHospedagem(numeroHospedagem);
+		}
+		catch(NullPointerException n){
+			System.out.println("Nao ha hospedagem para deletar");
+		}
+	}
+
+	private void confirmRegistro(Integer numeroQuarto, Integer numeroDias, Integer numeroHospedes, String categoriaQuarto){
+		if(nome.getText().isEmpty() || email.getText().isEmpty() || cpf.getText().isEmpty() || telefone.getText().isEmpty() || endereco.getText().isEmpty() || bairro.getText().isEmpty() || cidade.getText().isEmpty()){
+			JOptionPane.showMessageDialog(null,"Por favor, preencha todos os campos");
+			return;
+		}
+
+		try {
+			Integer.parseInt(numero.getText());
+		}
+		catch (NumberFormatException n) {
+			JOptionPane.showMessageDialog(null,"Por favor, insira um numero valido");
+			return;
+		}
+
+		String regex = "^(.+)@(.+)$";
+		Pattern pattern = Pattern.compile(regex);
+		if(!pattern.matcher(email.getText()).matches()){
+			JOptionPane.showMessageDialog(null,"Por favor, insira um email valido\n Email Inserido: " + email.getText());
+			return;
+		}
+
+		if (hospedesCadastrados == 0) {
+			IQuarto tmp = quartoController.alocaQuarto(numeroQuarto, categoriaQuarto);
+			numeroHospedagem = cadastroController.createHospedagem(tmp, numeroDias, quartoController.getValorCategoria(categoriaQuarto));
+		}
+
+		cadastroController.createHospede(nome.getText(), email.getText(), cpf.getText(), telefone.getText(), endereco.getText(), bairro.getText(), cidade.getText(), (String) uf.getSelectedItem(), Integer.parseInt(numero.getText()), numeroHospedagem);
+		hospedesCadastrados += 1;
+
+		JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
+
+		if(hospedesCadastrados.equals(numeroHospedes)){
+			dispose();
+		}
+
+
+		nome.setText("");
+		email.setText("");
+		cpf.setText("");
+		telefone.setText("");
+		endereco.setText("");
+		bairro.setText("");
+		cidade.setText("");
+		uf.setSelectedIndex(0);
+	}
+
 }

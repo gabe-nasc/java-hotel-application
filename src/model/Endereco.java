@@ -3,7 +3,11 @@ package model;
 import java.io.Serializable;
 
 public class Endereco implements Serializable {
-    private String bairro;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6051853297410372690L;
+	private String bairro;
     private String logradouro;
     private Integer numero;
     private Cidade cidade;

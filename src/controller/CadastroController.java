@@ -4,13 +4,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.*;
+import model.Endereco;
+import model.Hospedagem;
+import model.Hospede;
+import model.IHospede;
+import model.IQuarto;
 
 public class CadastroController implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7407544803349826918L;
 	private List<Hospedagem> listaHospedagem = new ArrayList<>();
-
-	//private Hospedagem temp = new Hospedagem();
-	// public Integer novosHospedes;
 
 	public void addHospedeToHospedagem(Hospede hospede, Integer numeroHospedagem){
 		Hospedagem tmp = listaHospedagem.stream().filter(obj -> obj.getNumero().equals(numeroHospedagem)).findFirst().orElse(null);
@@ -24,9 +29,7 @@ public class CadastroController implements Serializable {
 	
 	public List<IHospede> getHospedes() {
 		List<IHospede> tmp = new ArrayList<>();
-		System.out.println("Inside getHospedes");
 		for (Hospedagem h: this.listaHospedagem) {
-			System.out.println(h.getCheckOut());
 			if (h.getCheckOut() == null) {
 				tmp.addAll(h.getListaHospedes());
 			}

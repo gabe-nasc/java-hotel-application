@@ -1,17 +1,20 @@
 package controller;
 
-import view.MainView;
-
-import java.awt.*;
+import java.awt.EventQueue;
 import java.io.Serializable;
 
+import view.MainView;
+
 public class MainController implements Serializable {
-    private CadastroController cadastro = new CadastroController();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3058378445360671412L;
+	private CadastroController cadastro = new CadastroController();
     private RestauranteController restaurante = new RestauranteController();
     private QuartoController quarto = new QuartoController();
 
     public static void main(String[] args) {
-        Serializer serializer = new Serializer();
         MainController mainController = Serializer.load();
         EventQueue.invokeLater(new Runnable() {
             public void run() {

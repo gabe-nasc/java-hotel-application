@@ -3,17 +3,18 @@ package model;
 import java.io.Serializable;
 
 public class Quarto implements IQuarto, Serializable {
-    private Integer numero, vagas;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6776986349338235676L;
+	private final Integer numero;
+    private Integer vagas;
     private boolean disponivel;
 
     public Quarto(Integer numero, Integer vagas) {
         this.numero = numero;
         this.disponivel = true;
         this.vagas = vagas;
-    }
-
-    public void setNumero(int numero) {
-        this.numero = numero;
     }
 
     public void liberar() {

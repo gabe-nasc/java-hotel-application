@@ -1,12 +1,15 @@
 package model;
 
-import javax.swing.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CatalogoQuartos implements Serializable {
-    private List<CategoriaQuarto> categorias;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3490164063276614415L;
+	private List<CategoriaQuarto> categorias;
 
     public CatalogoQuartos() {
         this.categorias = new ArrayList<CategoriaQuarto>();

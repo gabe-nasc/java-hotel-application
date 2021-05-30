@@ -6,7 +6,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class CategoriaQuarto implements Serializable {
-    private String nome;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6125486019347160895L;
+	private String nome;
     private String descricao;
     private Double tarifaDiaria;
     private List<IQuarto> quartos;

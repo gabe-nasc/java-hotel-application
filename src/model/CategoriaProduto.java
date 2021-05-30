@@ -2,18 +2,21 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Objects;
 
-public class Categoria implements Serializable {
-    private ArrayList<Produto> listaProdutos;
+public class CategoriaProduto implements Serializable {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3996405795224563777L;
+	private ArrayList<IProduto> listaProdutos;
     private String nome;
 
-    public ArrayList<Produto> getProdutos() {
+    public ArrayList<IProduto> getProdutos() {
         return listaProdutos;
     }
 
-    public Categoria(String nome) {
-        this.listaProdutos = new ArrayList<Produto>();
+    public CategoriaProduto(String nome) {
+        this.listaProdutos = new ArrayList<IProduto>();
         this.nome = nome;
     }
 
@@ -28,18 +31,18 @@ public class Categoria implements Serializable {
     public String listarCategoria(){
         StringBuilder Builder = new StringBuilder();
         Builder.append(getNome()).append(":\n");
-        for (Produto p : listaProdutos) {
-            Builder.append(p.listarProduto());
+        for (IProduto p : listaProdutos) {
+            Builder.append("Nome: " + p.getNome() + '\t' + "Valor: " + p.getPreco() + '\n');
         }
         
         return Builder.toString();
     };
 
-    public void addProduto(Produto produto){
+    public void addProduto(IProduto produto){
         listaProdutos.add(produto);
     }
 
-    public void removeProduto(Produto produto){
+    public void removeProduto(IProduto produto){
         listaProdutos.remove(produto);
     }
 }

@@ -1,22 +1,40 @@
 package view;
 
-import controller.MainController;
-import controller.RestauranteController;
-import model.*;
-
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.border.EmptyBorder;
+
+import controller.MainController;
+import controller.RestauranteController;
+import model.CategoriaProduto;
+import model.IProduto;
+import model.ItemConta;
+
 public class EditarItemContaView extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2543427095661833748L;
 	private final MainController mainController;
 	private final RestauranteController restauranteController;
 	private JPanel contentPane;
 
 	private HashMap<String, IProduto> stringToProduto;
 	private DefaultComboBoxModel values;
+	private JButton Cancelar;
+	private JButton Confirmar;
+	private JLabel qtdLbl;
+	private JSpinner qtdSpinner;
+	private JComboBox itemComboBox;
 
 	/**
 	 * Create the frame.
@@ -27,7 +45,7 @@ public class EditarItemContaView extends JFrame {
 
 		stringToProduto = new HashMap<>();
 		values = new DefaultComboBoxModel();
-		for(Categoria ctg: restauranteController.getCatalogo().getCategorias()){
+		for(CategoriaProduto ctg: restauranteController.getCatalogo().getCategorias()){
 			for(IProduto produto: ctg.getProdutos()){
 				stringToProduto.put(produto.getNome(), produto);
 				values.addElement(produto.getNome());
@@ -40,23 +58,24 @@ public class EditarItemContaView extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		JComboBox itemComboBox = new JComboBox();
+
+		itemComboBox = new JComboBox();
 		itemComboBox.setModel(values);
 		itemComboBox.setSelectedItem(item.getProduto().getNome());
 		itemComboBox.setBounds(10, 11, 191, 28);
 		contentPane.add(itemComboBox);
-		
-		JSpinner qtdSpinner = new JSpinner();
+
+		qtdSpinner = new JSpinner();
 		qtdSpinner.setValue(item.getQtd());
 		qtdSpinner.setBounds(171, 50, 30, 20);
 		contentPane.add(qtdSpinner);
-		
-		JLabel qtdLbl = new JLabel("Quantidade");
+
+		qtdLbl = new JLabel("Quantidade");
 		qtdLbl.setBounds(10, 50, 88, 20);
 		contentPane.add(qtdLbl);
-		
-		JButton Confirmar = new JButton("Confirmar");
+
+
+		Confirmar = new JButton("Confirmar");
 		Confirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				item.setQtd((Integer) qtdSpinner.getValue());
@@ -68,7 +87,8 @@ public class EditarItemContaView extends JFrame {
 		Confirmar.setBounds(10, 81, 191, 23);
 		contentPane.add(Confirmar);
 		
-		JButton Cancelar = new JButton("Cancelar");
+
+		Cancelar = new JButton("Cancelar");
 		Cancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();

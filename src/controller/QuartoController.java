@@ -1,17 +1,19 @@
 package controller;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import model.CatalogoQuartos;
 import model.CategoriaQuarto;
 import model.IQuarto;
 
-import javax.swing.*;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 public class QuartoController implements Serializable {
-    private CatalogoQuartos catalogo;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5370090482517271623L;
+	private CatalogoQuartos catalogo;
 
     public QuartoController(){
         this.catalogo = new CatalogoQuartos();

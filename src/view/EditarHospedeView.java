@@ -1,16 +1,25 @@
 package view;
 
-import javax.swing.*;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.regex.Pattern;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import controller.CadastroController;
 import controller.MainController;
 import model.Endereco;
 import model.Hospede;
-
-import java.awt.Font;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class EditarHospedeView extends JFrame {
 
@@ -29,13 +38,18 @@ public class EditarHospedeView extends JFrame {
 	private JTextField cidade;
 	private JButton btnNewButton;
 	private JTextField endereco;
+	private JLabel lblNewLabel;
+	private JLabel lblNewLabel_1;
+	private JButton btnCancelar;
+	private JLabel lblEndereco;
+	private JLabel lblCidade;
+	private JComboBox uf;
 
 	private CadastroController cadastro;
 
 	public EditarHospedeView(MainController mainController, Hospede original) {
 		setResizable(false);
 		this.cadastro = mainController.getCadastro();
-		String old_cpf = original.getCpf();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 498, 357);
 		contentPane = new JPanel();
@@ -43,7 +57,8 @@ public class EditarHospedeView extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("Nome");
+
+		lblNewLabel = new JLabel("Nome");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(10, 11, 60, 25);
 		contentPane.add(lblNewLabel);
@@ -53,7 +68,8 @@ public class EditarHospedeView extends JFrame {
 		contentPane.add(nome);
 		nome.setColumns(10);
 
-		JLabel lblNewLabel_1 = new JLabel("Email");
+
+		lblNewLabel_1 = new JLabel("Email");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setBounds(10, 47, 60, 25);
 		contentPane.add(lblNewLabel_1);
@@ -79,6 +95,7 @@ public class EditarHospedeView extends JFrame {
 		contentPane.add(lblCpf);
 
 		cpf = new JTextField();
+		cpf.setEditable(false);
 		cpf.setColumns(10);
 		cpf.setBounds(91, 121, 381, 20);
 		contentPane.add(cpf);
@@ -108,12 +125,13 @@ public class EditarHospedeView extends JFrame {
 		lblUf.setBounds(10, 227, 60, 25);
 		contentPane.add(lblUf);
 
-		JComboBox uf = new JComboBox();
+
+		uf = new JComboBox();
 		uf.setModel(new DefaultComboBoxModel(new String[] {"AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RN", "RO", "RR", "RS", "SC", "SE", "SP", "TO"}));
 		uf.setBounds(91, 224, 72, 22);
 		contentPane.add(uf);
 
-		JLabel lblCidade = new JLabel("Cidade");
+		lblCidade = new JLabel("Cidade");
 		lblCidade.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCidade.setBounds(185, 227, 60, 25);
 		contentPane.add(lblCidade);
@@ -128,7 +146,8 @@ public class EditarHospedeView extends JFrame {
 		btnNewButton.setBounds(267, 263, 205, 40);
 		contentPane.add(btnNewButton);
 
-		JLabel lblEndereco = new JLabel("Endere\u00E7o");
+
+		lblEndereco = new JLabel("Endere\u00E7o");
 		lblEndereco.setHorizontalAlignment(SwingConstants.CENTER);
 		lblEndereco.setBounds(10, 155, 60, 25);
 		contentPane.add(lblEndereco);
@@ -146,8 +165,10 @@ public class EditarHospedeView extends JFrame {
 		cidade.setText(original.getEndereco().getCidade().getNome());
 		uf.setSelectedItem(original.getEndereco().getUf());
 		endereco.setText(original.getEndereco().getLogradouro());
+		numero.setText(String.valueOf(original.getEndereco().getNumero()));
 		
-		JButton btnCancelar = new JButton("Cancelar");
+
+		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
@@ -160,16 +181,38 @@ public class EditarHospedeView extends JFrame {
 
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				original.setCpf(cpf.getText());
-				original.setEmail(email.getText());
-				original.setNome(nome.getText());
-				original.setTelefone(telefone.getText());
-				original.setEndereco(new Endereco(bairro.getText(), cidade.getText(), endereco.getText(), (String) uf.getSelectedItem(), Integer.parseInt(numero.getText())));
-
-				JOptionPane.showMessageDialog(null, "Hospede atualizado com sucesso!");
-
+				confirmEdit(original);
 				dispose();
 			}
 		});
+	}
+
+	private void confirmEdit(Hospede original){
+		if(nome.getText().isEmpty() || email.getText().isEmpty() || telefone.getText().isEmpty() || endereco.getText().isEmpty() || bairro.getText().isEmpty() || cidade.getText().isEmpty()){
+			JOptionPane.showMessageDialog(null,"Por favor, preencha todos os campos");
+			return;
+		}
+
+		try {
+			Integer.parseInt(numero.getText());
+		}
+		catch (NumberFormatException n) {
+			JOptionPane.showMessageDialog(null,"Por favor, insira um numero valido");
+			return;
+		}
+
+		String regex = "^(.+)@(.+)$";
+		Pattern pattern = Pattern.compile(regex);
+		if(!pattern.matcher(email.getText()).matches()){
+			JOptionPane.showMessageDialog(null,"Por favor, insira um email valido\n Email Inserido: " + email.getText());
+			return;
+		}
+
+		original.setEmail(email.getText());
+		original.setNome(nome.getText());
+		original.setTelefone(telefone.getText());
+		original.setEndereco(new Endereco(bairro.getText(), cidade.getText(), endereco.getText(), (String) uf.getSelectedItem(), Integer.parseInt(numero.getText())));
+
+		JOptionPane.showMessageDialog(null, "Hospede atualizado com sucesso!");
 	}
 }

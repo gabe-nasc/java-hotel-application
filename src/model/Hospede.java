@@ -3,14 +3,18 @@ package model;
 import java.io.Serializable;
 
 public class Hospede implements IHospede, Serializable {
-    private String cpf;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2925666865267255151L;
+	final private String cpf;
     private String nome;
     private String telefone;
     private String email;
     private Endereco endereco;
 
     public Hospede(String cpf, String nome, String telefone, String email, Endereco endereco) {
-        this.setCpf(cpf);
+        this.cpf = cpf;
         this.setNome(nome);
         this.setTelefone(telefone);
         this.setEmail(email);
@@ -20,10 +24,6 @@ public class Hospede implements IHospede, Serializable {
     @Override
     public String getCpf() {
         return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
     }
 
     @Override

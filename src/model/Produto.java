@@ -3,7 +3,11 @@ package model;
 import java.io.Serializable;
 
 public class Produto implements IProduto, Serializable {
-    private String nome;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4634123718223975739L;
+	private String nome;
     private double preco;
 
     public Produto(String nome, double preco) {
@@ -29,11 +33,4 @@ public class Produto implements IProduto, Serializable {
         this.preco = preco;
     }
 
-    public String listarProduto(){
-        StringBuilder Builder = new StringBuilder();
-        Builder.append("Nome: ").append(this.getNome()).append('\t')
-                .append("Valor: ").append(this.getPreco()).append("\n");
-
-        return Builder.toString();
-    }
 }

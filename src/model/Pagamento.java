@@ -4,7 +4,11 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Pagamento implements Serializable {
-    private Date data;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2581897276928429239L;
+	private Date data;
     private Double value;
     private ETipoPagamento tipo;
 

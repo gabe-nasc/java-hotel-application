@@ -1,38 +1,49 @@
 package view;
 
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
+import java.util.Date;
+import java.util.HashMap;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
+import javax.swing.table.DefaultTableModel;
+
 import controller.CadastroController;
 import controller.MainController;
-import controller.QuartoController;
 import model.ETipoPagamento;
 import model.Hospedagem;
 import model.ItemConta;
 
-import java.awt.EventQueue;
-
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.MatteBorder;
-import java.awt.Color;
-import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.util.Date;
-import java.util.HashMap;
-import java.awt.Font;
-import java.awt.event.WindowFocusListener;
-import java.awt.event.WindowEvent;
-
 public class CheckOutView extends JFrame {
 
-	private final MainController mainController;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -263040506906539415L;
 	private final CadastroController cadastroController;
-	private final QuartoController quartoController;
 	private DefaultTableModel dtm;
 
 	private JPanel contentPane;
 	private JTable table;
 	private JButton confirmaCheckOut;
-	private JComboBox metodoPagamento;
+	private JComboBox<?> metodoPagamento;
 	private JButton btnCancelar;
 
 	private HashMap<Integer, ItemConta> rowToItem; // Mapeia a row em que cada item está
@@ -42,15 +53,17 @@ public class CheckOutView extends JFrame {
 	private JLabel lblNewLabel;
 	private JLabel lblNewLabel_1;
 	private JLabel lblNewLabel_2;
+	private JTextArea textArea;
+	private JLabel lblTotal;
+	private JLabel valorTotal;
 
 	/**
 	 * Create the frame.
 	 */
 	public CheckOutView(MainController mainController, Hospedagem hospedagem) {
 		setResizable(false);
-		this.mainController = mainController;
 		this.cadastroController = mainController.getCadastro();
-		this.quartoController = mainController.getQuarto();
+		mainController.getQuarto();
 
 		this.dtm = new DefaultTableModel();
 		this.rowToItem = new HashMap<>();
@@ -61,20 +74,21 @@ public class CheckOutView extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JTextArea textArea = new JTextArea();
+		textArea = new JTextArea();
 		textArea.setEditable(false);
 		textArea.setText(hospedagem.getResumoHospedagem());
 		textArea.setBounds(10, 67, 300, 417);
 		textArea.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		contentPane.add(textArea);
 
-		JLabel valorTotal = new JLabel("VALOR");
+		valorTotal = new JLabel("VALOR");
 		valorTotal.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		valorTotal.setHorizontalAlignment(SwingConstants.CENTER);
 		valorTotal.setBounds(816, 78, 168, 54);
 		contentPane.add(valorTotal);
 
-		JLabel lblTotal = new JLabel("TOTAL:");
+
+		lblTotal = new JLabel("TOTAL:");
 		lblTotal.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTotal.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblTotal.setBounds(816, 30, 168, 54);
@@ -124,16 +138,7 @@ public class CheckOutView extends JFrame {
 		editarItem = new JButton("Editar Selecionado");
 		editarItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EventQueue.invokeLater(new Runnable() {
-					public void run() {
-						try {
-							EditarItemContaView frame = new EditarItemContaView(mainController, rowToItem.get(table.getSelectedRow()));
-							frame.setVisible(true);
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-				});
+				openEditingView(mainController);
 			}
 		});
 		editarItem.setBounds(816, 216, 156, 32);
@@ -168,14 +173,7 @@ public class CheckOutView extends JFrame {
 		
 		confirmaCheckOut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Date checkOut = new Date();
-
-				hospedagem.setCheckOut(checkOut);
-				hospedagem.setPagamento(hospedagem.getValorTotal(), (ETipoPagamento) metodoPagamento.getSelectedItem());
-				hospedagem.liberaQuarto();
-				cadastroController.deleteHospedagem(hospedagem.getNumero());
-				JOptionPane.showMessageDialog(null, "Check-out realizado!");
-				dispose();
+				confirmCheckOut(hospedagem);
 			}
 		});
 
@@ -186,6 +184,17 @@ public class CheckOutView extends JFrame {
 			public void windowLostFocus(WindowEvent e) {
 			}
 		});
+	}
+
+	private void confirmCheckOut(Hospedagem hospedagem){
+		Date checkOut = new Date();
+
+		hospedagem.setCheckOut(checkOut);
+		hospedagem.setPagamento(hospedagem.getValorTotal(), (ETipoPagamento) metodoPagamento.getSelectedItem());
+		hospedagem.liberaQuarto();
+		cadastroController.deleteHospedagem(hospedagem.getNumero());
+		JOptionPane.showMessageDialog(null, "Check-out realizado!");
+		dispose();
 	}
 
 	private void resetTable(JTable table, JLabel valorTotal, Hospedagem hospedagem){
@@ -204,5 +213,18 @@ public class CheckOutView extends JFrame {
 		table.setModel(dtm);
 
 		valorTotal.setText("R$ " + String.valueOf(hospedagem.getValorTotal()));
+	}
+
+	private void openEditingView(MainController mainController){
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					EditarItemContaView frame = new EditarItemContaView(mainController, rowToItem.get(table.getSelectedRow()));
+					frame.setVisible(true);
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "Nenhum item selecionado");
+				}
+			}
+		});
 	}
 }

@@ -3,10 +3,13 @@ package model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Conta implements Serializable {
-    private ArrayList<ItemConta> listaItemContas = new ArrayList<>();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1002896276333727635L;
+	private ArrayList<ItemConta> listaItemContas = new ArrayList<>();
 
     public void addItem(ItemConta itemConta){
         listaItemContas.add(itemConta);

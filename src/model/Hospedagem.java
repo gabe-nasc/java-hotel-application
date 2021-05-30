@@ -8,7 +8,12 @@ import java.util.List;
 import java.util.Objects;
 
 public class Hospedagem implements Serializable {
-    private static Integer contador = 0;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7451740335717693922L;
+
+	private static Integer contador = 0;
 
     private final Integer numero;
     private Integer diasDeEstadia;
@@ -56,7 +61,6 @@ public class Hospedagem implements Serializable {
     }
 
     public void addHospede(Hospede h){
-        System.out.println("Hospede: " + h);
         listaHospedes.add(h);
     }
 
@@ -129,5 +133,9 @@ public class Hospedagem implements Serializable {
     public void setPagamento(Double valor, ETipoPagamento tipo) {
         this.pagamento = new Pagamento(new Date(), valor, tipo);
     }
+
+	public Pagamento getPagamento() {
+		return pagamento;
+	}
 
 }
